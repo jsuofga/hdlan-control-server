@@ -1,0 +1,174 @@
+        .p{
+        color:white;
+         }
+
+        .my_navbar{
+            border: 0px solid red;
+        }
+
+        .mySG350Form{
+          border: 1px solid red;
+          height: 150px;
+          text-align: center
+        }
+
+        .my_side-menu {
+            height:100%;
+            width:0;
+            position:fixed;
+            z-index:1;
+            top:0;
+            left:0;
+            background-color: white;
+            padding-top: 60px;
+            transition:0.5s;
+            overflow-x:hidden;
+        }
+        .my_side-menu a {
+     
+            padding: 10px;
+            text-decoration:none;
+            font-family:"arial";
+            font-size : 20px;
+            color:rgb(34, 35, 34);
+            display:block;
+            transition:0.3s;
+        }
+        .my_side-menu a:hover {
+     
+            color:#0066FF;
+     
+        }
+        .my_side-menu .btn-close{
+
+            position:absolute;
+            top:0;
+            right : 1px;
+            font-size:36px;
+            margin-left:50px
+        }
+        .my_main{
+            border: 0px solid red;
+          
+        }
+        .my_icon{
+            padding: 10px ;
+          
+        }
+        body {background-color: rgb(34, 35, 34);
+              overflow: auto; 
+              opacity: 1;
+  
+        }
+        .my-Container {
+              
+                    border: 0px solid red;
+                    color:white;  
+                    text-align: "center" ;           
+        }
+        .my-Row {
+                    border: 0px solid blue;
+                    color:white;                               
+        }
+        .my-Col {
+                    border: 0px solid grey;
+                    text-align: center;
+                    color:white;           
+        }
+
+        .my_form_input{
+                    color: blue;
+                    width: 100%;
+                    padding: 0px;
+        }
+        .my_img {
+                  display: block;
+                  margin-left: auto;
+                  margin-right: auto;
+                  width: 50%;
+                  padding: 10px;
+       
+        }
+        .my_middle {
+                 
+                  padding: 5px;                 
+                  margin-top: 50px;
+                  margin-bottom: 50px;
+                  margin-right: 20px;
+                  margin-left: 20px;
+         
+        }
+        .my_img_small {
+                  display: block;
+                  margin-left: auto;
+                  margin-right: auto;
+                  width: 10%;
+                  padding: 1px;
+        }
+
+        .my_spacing{
+          margin-right: 25px;
+          margin-left: 25px;
+
+        }
+        .my_text{
+          font: 12px arial, sans-serif;
+        }
+
+        .my_video_source_text{
+          background-color: grey;
+          color:white;
+        }
+  /* --------------------------------------------------------- */
+        .my_height{
+          
+          height:150px;
+      
+        }
+        .my_height_portrait{
+          
+          height:450px;
+      
+        }
+
+  
+
+/* --------------------------------------------------------- */
+        .col-xs-1-10,
+        .col-sm-1-10 {
+          position: relative;
+          min-height: 1px;
+        }
+
+        .col-xs-1-10 {
+          width: 10%;
+          float: left;
+        }
+        @media screen and (max-width: 768px) {
+
+          /* #TXvideoPreview{display: none;} */
+          #sourePreviewtext{display: none;}
+              
+        } 
+
+        @media (min-width: 768px) {
+          .col-sm-1-10 {
+            width: 10%;
+            float: left;
+           
+          }
+        }
+
+        @media (min-width: 992px) {
+          .col-md-1-10 {
+            width: 10%;
+            float: left;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          .col-lg-1-10 {
+            width: 10%;
+            float: left;
+          }
+        }
