@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Octava HDLAN Controller</title>
+    <link rel="icon"  type="image/png"  href="img/octava-site-icon.png">
+
+    <!-- Styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fontawesome-all.css" rel="stylesheet">
+    <link href="css/myCSS.css" rel="stylesheet">
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-3.4.1.min"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+  </head>
+<body>
+
+
+<div id = "my_side-menu" class = "my_side-menu">
+        <!-- Side Menu -->
+
+        <a href = "#" class = "btn-close" onclick = "closeSideMenu()">&times;</a>     <!-- symbol for X for 'close' = &times -->
+        <a id ='sideMenuRow0'><span  aria-hidden="true" ></span> Select Video Source</a>
+        <a id ='sideMenuRow1'href="#" title = "1" ><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName1">Video Source 1</span> </a>
+        <a id ='sideMenuRow2'href="#" title = "2" ><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName2">Video Source 2</span></a>
+        <a id ='sideMenuRow3'href="#" title = "3" ><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName3">Video Source 3</span> </a>
+        <a id ='sideMenuRow4'href="#" title = "4" ><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName4">Video Source 4</span> </a>
+        <a id ='sideMenuRow5'href="#" title = "5" ><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName5">Video Source 5</span> </a>
+        <a id ='sideMenuRow6'href="#" title = "6" ><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName6">Video Source 6</span> </a>
+        <a id ='sideMenuRow7'href="#" title = "7" ><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName7">Video Source 7</span> </a>
+        <a id ='sideMenuRow8'href="#" title = "8" ><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName8">Video Source 8</span> </a>
+        <a id ='sideMenuRow9'href="#" title = "9" ><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName9">Video Source 9</span> </a>
+        <a id ='sideMenuRow10'href="#" title = "10"><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName10">Video Source 10</span> </a>
+        <a id ='sideMenuRow11'href="#" title = "11"><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName11">Video Source 11</span> </a>
+        <a id ='sideMenuRow12'href="#" title = "12"><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName12">Video Source 12</span> </a>
+        <a id ='sideMenuRow13'href="#" title = "13"><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName13">Video Source 13</span> </a>
+        <a id ='sideMenuRow14'href="#" title = "14"><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName14">Video Source 14</span> </a>
+        <a id ='sideMenuRow15'href="#" title = "15"><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName15">Video Source 15</span> </a>
+        <a id ='sideMenuRow16'href="#" title = "16"><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName16">Video Source 16</span> </a>
+        <a id ='sideMenuRow17'href="#" title = "17"><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName17">Video Source 17</span> </a>
+        <a id ='sideMenuRow18'href="#" title = "18"><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName18">Video Source 18</span> </a>
+        <a id ='sideMenuRow19'href="#" title = "19"><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName19">Video Source 19</span> </a>
+        <a id ='sideMenuRow20'href="#" title = "20"><span class="fas fa-satellite-dish" aria-hidden="true" ></span><span id = "sourceName20">Video Source 20</span> </a>
+        <a id ='sideMenuRow21'href="#" onclick = "SystemConfig()"><span class = "fas fa-cog" aria-hidden="true"></span> System Config</a>
+        <a id ='sideMenuRow22'href="#" onclick = "show_Devices()"><span class= "fas fa-tv" aria-hidden="true" ></span> Devices</a>
+        <a id ='sideMenuRow23'href="#" onclick = "saveFavoriteScene()"><span class="fas fa-bookmark" aria-hidden="true" ></span> Save Scene</a>
+       
+</div>
+
+
+<div class="container my-Container overflow-auto">
+
+    <div class="row">
+      <div class="col-md-2 my-Col">
+          <!-- Hamburger Menu Icon -->
+          <span id = "hamburger_menu" style="margin:left;display:table;"> <a href = "#"  onclick = "openSideMenu('showSettings')">
+            <!-- Hamburger Menu Icon Using SVG  -->
+            <svg width = "30" height = "30">
+            <path d = "M0 ,5 30, 5" stroke = "#fff" stroke-width = "3"/>
+            <path d = "M0 ,14 30, 14" stroke = "#fff" stroke-width = "3"/>
+            <path d = "M0 ,23 30, 23" stroke = "#fff" stroke-width = "3"/>
+            </svg>
+            </a>
+        </span>
+      </div>
+        <div class="col-md-2 my-Col"></div>
+        <div class="col-md-4 my-Col"><img src="img/octava_logo_white-200.png" width = "25%" ></div>
+        <div class="col-md-2 my-Col"></div>
+        <div class="col-md-2 my-Col">HDLAN Controller</div>
+    </div>
+
+    <div id = "topRow" class="row">
+        <div class="col-md-2 my-Col" ></div>
+        <div class="col-md-2 my-Col"></div>
+
+        <div class="col-md-2 my-Col">
+          <button id = 'save-btn' type="button" class=" btn btn-primary btn-block" onclick = "saveUserInputs()">
+            <span class= "fas fa-file-export" aria-hidden="true"></span> Save
+          </button>
+        </div>
+        <div class="col-md-2 my-Col">
+          <button id = 'cancel-btn' type="button" class=" btn btn-danger btn-block" onclick = "show_Home()">
+            <span class="fas fa-times" aria-hidden="true"></span> Cancel
+          </button>
+        </div>
+    </div>
+
+    <div id = 'TVrow1'class="row">
+      <div id = 'tv1' class=" col-md-1-10 my-Col"><span id = "tv1Label"></span><img id ='img-tv1' src="img/tv_white_144.png" class= "my_img"  alt="1"><div class="my_video_source_text" id ='tv1source'></div><input type="text" id = "inputTV1name" class = "my_form_input" name ="1" maxlength = "10"  value = "" placeholder=" TV1 name"></div>
+      <div id = 'tv2' class=" col-md-1-10 my-Col"><span id = "tv2Label"></span><img id ='img-tv2' src="img/tv_white_144.png" class= "my_img"  alt="2"><div class="my_video_source_text" id ='tv2source'></div><input type="text" id = "inputTV2name" class = "my_form_input" name ="2" maxlength = "10"  value = "" placeholder=" TV2 name"></div>
+      <div id = 'tv3' class=" col-md-1-10 my-Col"><span id = "tv3Label"></span><img id ='img-tv3' src="img/tv_white_144.png" class= "my_img"  alt="3"><div class="my_video_source_text" id ='tv3source'></div><input type="text" id = "inputTV3name" class = "my_form_input" name ="3" maxlength = "10"  value = "" placeholder=" TV3 name"></div>
+      <div id = 'tv4' class=" col-md-1-10 my-Col"><span id = "tv4Label"></span><img id ='img-tv4' src="img/tv_white_144.png" class= "my_img"  alt="4"><div class="my_video_source_text" id ='tv4source'></div><input type="text" id = "inputTV4name" class = "my_form_input" name ="4" maxlength = "10"  value = "" placeholder=" TV4 name"></div>
+      <div id = 'tv5' class=" col-md-1-10 my-Col"><span id = "tv5Label"></span><img id ='img-tv5' src="img/tv_white_144.png" class= "my_img"  alt="5"><div class="my_video_source_text" id ='tv5source'></div><input type="text" id = "inputTV5name" class = "my_form_input" name ="5" maxlength = "10"  value = "" placeholder=" TV5 name"></div>
+      <div id = 'tv6' class=" col-md-1-10 my-Col"><span id = "tv6Label"></span><img id ='img-tv6' src="img/tv_white_144.png" class= "my_img"  alt="6"><div class="my_video_source_text" id ='tv6source'></div><input type="text" id = "inputTV6name" class = "my_form_input" name ="6" maxlength = "10"  value = "" placeholder=" TV6 name"></div>
+      <div id = 'tv7' class=" col-md-1-10 my-Col"><span id = "tv7Label"></span><img id ='img-tv7' src="img/tv_white_144.png" class= "my_img"  alt="7"><div class="my_video_source_text" id ='tv7source'></div><input type="text" id = "inputTV7name" class = "my_form_input" name ="7" maxlength = "10"  value = "" placeholder=" TV7 name"></div>
+      <div id = 'tv8' class=" col-md-1-10 my-Col"><span id = "tv8Label"></span><img id ='img-tv8' src="img/tv_white_144.png" class= "my_img"  alt="8"><div class="my_video_source_text" id ='tv8source'></div><input type="text" id = "inputTV8name" class = "my_form_input" name ="8" maxlength = "10"  value = "" placeholder=" TV8 name"></div>
+      <div id = 'tv9' class=" col-md-1-10 my-Col"><span id = "tv9Label"></span><img id ='img-tv9' src="img/tv_white_144.png" class= "my_img"  alt="9"><div class="my_video_source_text" id ='tv9source'></div><input type="text" id = "inputTV9name" class = "my_form_input" name ="9" maxlength = "10"  value = "" placeholder=" TV9 name"></div>
+      <div id = 'tv10' class="col-md-1-10 my-Col"><span id = "tv10Label"></span><img id ='img-tv10' src="img/tv_white_144.png" class= "my_img"  alt="10"><div class="my_video_source_text" id ='tv10source'></div><input type="text" id = "inputTV10name" class = "my_form_input" name ="10" maxlength = "10"  value = "" placeholder=" TV10 name"></div>
+    </div>
+
+    <div id = 'TVrow2' class="row">
+        <div id = 'tv11' class="col-md-1-10 my-Col"><span id = "tv11Label"></span><img id ='img-tv11' src="img/tv_white_144.png" class= "my_img"  alt="11"><div class="my_video_source_text" id ='tv11source'></div><input type="text" id = "inputTV11name" class = "my_form_input" name ="11" maxlength = "10"  value = "" placeholder=" TV11 name"></div>
+        <div id = 'tv12' class="col-md-1-10 my-Col"><span id = "tv12Label"></span><img id ='img-tv12' src="img/tv_white_144.png" class= "my_img"  alt="12"><div class="my_video_source_text" id ='tv12source'></div><input type="text" id = "inputTV12name" class = "my_form_input" name ="12" maxlength = "10"  value = "" placeholder=" TV12 name"></div>
+        <div id = 'tv13' class="col-md-1-10 my-Col"><span id = "tv13Label"></span><img id ='img-tv13' src="img/tv_white_144.png" class= "my_img"  alt="13"><div class="my_video_source_text" id ='tv13source'></div><input type="text" id = "inputTV13name" class = "my_form_input" name ="13" maxlength = "10"  value = "" placeholder=" TV13 name"></div>
+        <div id = 'tv14' class="col-md-1-10 my-Col"><span id = "tv14Label"></span><img id ='img-tv14' src="img/tv_white_144.png" class= "my_img"  alt="14"><div class="my_video_source_text" id ='tv14source'></div><input type="text" id = "inputTV14name" class = "my_form_input" name ="14" maxlength = "10"  value = "" placeholder=" TV14 name"></div>
+        <div id = 'tv15' class="col-md-1-10 my-Col"><span id = "tv15Label"></span><img id ='img-tv15' src="img/tv_white_144.png" class= "my_img"  alt="15"><div class="my_video_source_text" id ='tv15source'></div><input type="text" id = "inputTV15name" class = "my_form_input" name ="15" maxlength = "10"  value = "" placeholder=" TV15 name"></div>
+        <div id = 'tv16' class="col-md-1-10 my-Col"><span id = "tv16Label"></span><img id ='img-tv16' src="img/tv_white_144.png" class= "my_img"  alt="16"><div class="my_video_source_text" id ='tv16source'></div><input type="text" id = "inputTV16name" class = "my_form_input" name ="16" maxlength = "10"  value = "" placeholder=" TV16 name"></div>
+        <div id = 'tv17' class="col-md-1-10 my-Col"><span id = "tv17Label"></span><img id ='img-tv17' src="img/tv_white_144.png" class= "my_img"  alt="17"><div class="my_video_source_text" id ='tv17source'></div><input type="text" id = "inputTV17name" class = "my_form_input" name ="17" maxlength = "10"  value = "" placeholder=" TV17 name"></div>
+        <div id = 'tv18' class="col-md-1-10 my-Col"><span id = "tv18Label"></span><img id ='img-tv18' src="img/tv_white_144.png" class= "my_img"  alt="18"><div class="my_video_source_text" id ='tv18source'></div><input type="text" id = "inputTV18name" class = "my_form_input" name ="18" maxlength = "10"  value = "" placeholder=" TV18 name"></div>
+        <div id = 'tv19' class="col-md-1-10 my-Col"><span id = "tv19Label"></span><img id ='img-tv19' src="img/tv_white_144.png" class= "my_img"  alt="19"><div class="my_video_source_text" id ='tv19source'></div><input type="text" id = "inputTV19name" class = "my_form_input" name ="19" maxlength = "10"  value = "" placeholder=" TV19 name"></div>
+        <div id = 'tv20' class="col-md-1-10 my-Col"><span id = "tv20Label"></span><img id ='img-tv20' src="img/tv_white_144.png" class= "my_img"  alt="20"><div class="my_video_source_text" id ='tv20source'></div><input type="text" id = "inputTV20name" class = "my_form_input" name ="20" maxlength = "10"  value = "" placeholder=" TV20 name"></div>
+      </div>
+
+    <div id = 'TVrow3' class="row">
+        <div id = 'tv21' class="col-md-1-10 my-Col"><span id = "tv21Label"></span><img id ='img-tv21' src="img/tv_white_144.png" class= "my_img"  alt="21"><div class="my_video_source_text" id ='tv21source'></div><input type="text" id = "inputTV21name" class = "my_form_input" name ="21" maxlength = "10"  value = "" placeholder=" TV21 name"></div>
+        <div id = 'tv22' class="col-md-1-10 my-Col"><span id = "tv22Label"></span><img id ='img-tv22' src="img/tv_white_144.png" class= "my_img"  alt="22"><div class="my_video_source_text" id ='tv22source'></div><input type="text" id = "inputTV22name"  class = "my_form_input" name ="22" maxlength = "10"  value = "" placeholder=" TV22 name"></div>
+        <div id = 'tv23' class="col-md-1-10 my-Col"><span id = "tv23Label"></span><img id ='img-tv23' src="img/tv_white_144.png" class= "my_img"  alt="23"><div class="my_video_source_text" id ='tv23source'></div><input type="text" id = "inputTV23name" class = "my_form_input" name ="23" maxlength = "10"  value = "" placeholder=" TV23 name"></div>
+        <div id = 'tv24' class="col-md-1-10 my-Col"><span id = "tv24Label"></span><img id ='img-tv24' src="img/tv_white_144.png" class= "my_img"  alt="24"><div class="my_video_source_text" id ='tv24source'></div><input type="text" id = "inputTV24name" class = "my_form_input" name ="24" maxlength = "10"  value = "" placeholder=" TV24 name"></div>
+        <div id = 'tv25' class="col-md-1-10 my-Col"><span id = "tv25Label"></span><img id ='img-tv25' src="img/tv_white_144.png" class= "my_img"  alt="25"><div class="my_video_source_text" id ='tv25source'></div><input type="text" id = "inputTV25name" class = "my_form_input" name ="25" maxlength = "10"  value = "" placeholder=" TV25 name"></div>
+        <div id = 'tv26' class="col-md-1-10 my-Col"><span id = "tv26Label"></span><img id ='img-tv26' src="img/tv_white_144.png" class= "my_img"  alt="26"><div class="my_video_source_text" id ='tv26source'></div><input type="text" id = "inputTV26name" class = "my_form_input" name ="26" maxlength = "10"  value = "" placeholder=" TV26 name"></div>
+        <div id = 'tv27' class="col-md-1-10 my-Col"><span id = "tv27Label"></span><img id ='img-tv27' src="img/tv_white_144.png" class= "my_img"  alt="27"><div class="my_video_source_text" id ='tv27source'></div><input type="text" id = "inputTV27name" class = "my_form_input" name ="27" maxlength = "10"  value = "" placeholder=" TV27 name"></div>
+        <div id = 'tv28' class="col-md-1-10 my-Col"><span id = "tv28Label"></span><img id ='img-tv28' src="img/tv_white_144.png" class= "my_img"  alt="28"><div class="my_video_source_text" id ='tv28source'></div><input type="text" id = "inputTV28name" class = "my_form_input" name ="28" maxlength = "10"  value = "" placeholder=" TV28 name"></div>
+        <div id = 'tv29' class="col-md-1-10 my-Col"><span id = "tv29Label"></span><img id ='img-tv29' src="img/tv_white_144.png" class= "my_img"  alt="29"><div class="my_video_source_text" id ='tv29source'></div><input type="text" id = "inputTV29name" class = "my_form_input" name ="29" maxlength = "10"  value = "" placeholder=" TV29 name"></div>
+        <div id = 'tv30' class="col-md-1-10 my-Col"><span id = "tv30Label"></span><img id ='img-tv30' src="img/tv_white_144.png" class= "my_img"  alt="30"><div class="my_video_source_text" id ='tv30source'></div><input type="text" id = "inputTV30name" class = "my_form_input" name ="30" maxlength = "10"  value = "" placeholder=" TV30 name"></div>
+    </div>
+
+    <div id = 'TVrow4' class="row">
+        <div id = 'tv31' class="col-md-1-10 my-Col"><span id = "tv31Label"></span><img id ='img-tv31' src="img/tv_white_144.png" class= "my_img"  alt="31"><div class="my_video_source_text" id ='tv31source'></div><input type="text" id = "inputTV31name" class = "my_form_input" name ="31" maxlength = "10"  value = "" placeholder=" TV31 name"></div>
+        <div id = 'tv32' class="col-md-1-10 my-Col"><span id = "tv32Label"></span><img id ='img-tv32' src="img/tv_white_144.png" class= "my_img"  alt="32"><div class="my_video_source_text" id ='tv32source'></div><input type="text" id = "inputTV32name"  class = "my_form_input" name ="32" maxlength = "10"  value = "" placeholder=" TV32 name"></div>
+        <div id = 'tv33' class="col-md-1-10 my-Col"><span id = "tv33Label"></span><img id ='img-tv33' src="img/tv_white_144.png" class= "my_img"  alt="33"><div class="my_video_source_text" id ='tv33source'></div><input type="text" id = "inputTV33name" class = "my_form_input" name ="33" maxlength = "10"  value = "" placeholder=" TV33 name"></div>
+        <div id = 'tv34' class="col-md-1-10 my-Col"><span id = "tv34Label"></span><img id ='img-tv34' src="img/tv_white_144.png" class= "my_img"  alt="34"><div class="my_video_source_text" id ='tv34source'></div><input type="text" id = "inputTV34name" class = "my_form_input" name ="34" maxlength = "10"  value = "" placeholder=" TV34 name"></div>
+        <div id = 'tv35' class="col-md-1-10 my-Col"><span id = "tv35Label"></span><img id ='img-tv35' src="img/tv_white_144.png" class= "my_img"  alt="35"><div class="my_video_source_text" id ='tv35source'></div><input type="text" id = "inputTV35name" class = "my_form_input" name ="35" maxlength = "10"  value = "" placeholder=" TV35 name"></div>
+        <div id = 'tv36' class="col-md-1-10 my-Col"><span id = "tv36Label"></span><img id ='img-tv36' src="img/tv_white_144.png" class= "my_img"  alt="36"><div class="my_video_source_text" id ='tv36source'></div><input type="text" id = "inputTV36name" class = "my_form_input" name ="36" maxlength = "10"  value = "" placeholder=" TV36 name"></div>
+        <div id = 'tv37' class="col-md-1-10 my-Col"><span id = "tv37Label"></span><img id ='img-tv37' src="img/tv_white_144.png" class= "my_img"  alt="37"><div class="my_video_source_text" id ='tv37source'></div><input type="text" id = "inputTV37name" class = "my_form_input" name ="37" maxlength = "10"  value = "" placeholder=" TV37 name"></div>
+        <div id = 'tv38' class="col-md-1-10 my-Col"><span id = "tv38Label"></span><img id ='img-tv38' src="img/tv_white_144.png" class= "my_img"  alt="38"><div class="my_video_source_text" id ='tv38source'></div><input type="text" id = "inputTV38name" class = "my_form_input" name ="38" maxlength = "10"  value = "" placeholder=" TV38 name"></div>
+        <div id = 'tv39' class="col-md-1-10 my-Col"><span id = "tv39Label"></span><img id ='img-tv39' src="img/tv_white_144.png" class= "my_img"  alt="39"><div class="my_video_source_text" id ='tv39source'></div><input type="text" id = "inputTV39name" class = "my_form_input" name ="39" maxlength = "10"  value = "" placeholder=" TV39 name"></div>
+        <div id = 'tv40' class="col-md-1-10 my-Col"><span id = "tv40Label"></span><img id ='img-tv40' src="img/tv_white_144.png" class= "my_img"  alt="40"><div class="my_video_source_text" id ='tv40source'></div><input type="text" id = "inputTV40name" class = "my_form_input" name ="40" maxlength = "10"  value = "" placeholder=" TV40 name"></div>
+    </div>
+
+
+    <div id = 'Inputrow1' class="row">
+        <div id = 'in1'class="col-md-1-10 my-Col" ><span id = "in1Label"></span><img  id="img-in1" src="img/input_white_144.png" class= "my_img" alt = "1" ><div  id ='In1name'></div><input type="text" id = "input1name" class = "my_form_input" name ="1" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video1 name"></div>
+        <div id = 'in2'class="col-md-1-10 my-Col" ><span id = "in2Label"></span><img  id="img-in2" src="img/input_white_144.png" class= "my_img" alt = "2" ><div  id ='In2name'></div><input type="text" id = "input2name" class = "my_form_input" name ="2" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video2 name"></div>
+        <div id = 'in3'class="col-md-1-10 my-Col" ><span id = "in3Label"></span><img  id="img-in3" src="img/input_white_144.png" class= "my_img" alt = "3" ><div  id ='In3name'></div><input type="text" id = "input3name" class = "my_form_input" name ="3" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video3 name"></div>
+        <div id = 'in4'class="col-md-1-10 my-Col" ><span id = "in4Label"></span><img  id="img-in4" src="img/input_white_144.png" class= "my_img" alt = "4" ><div  id ='In4name'></div><input type="text" id = "input4name" class = "my_form_input" name ="4" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video4 name"></div>
+        <div id = 'in5'class="col-md-1-10 my-Col" ><span id = "in5Label"></span><img  id="img-in5" src="img/input_white_144.png" class= "my_img" alt = "5" ><div  id ='In5name'></div><input type="text" id = "input5name" class = "my_form_input" name ="5" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video5 name"></div>
+        <div id = 'in6'class="col-md-1-10 my-Col" ><span id = "in6Label"></span><img  id="img-in6" src="img/input_white_144.png" class= "my_img" alt = "6" ><div  id ='In6name'></div><input type="text" id = "input6name" class = "my_form_input" name ="6" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video6 name"></div>
+        <div id = 'in7'class="col-md-1-10 my-Col" ><span id = "in7Label"></span><img  id="img-in7" src="img/input_white_144.png" class= "my_img" alt = "7" ><div  id ='In7name'></div><input type="text" id = "input7name" class = "my_form_input" name ="7" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video7 name"></div>
+        <div id = 'in8'class="col-md-1-10 my-Col" ><span id = "in8Label"></span><img  id="img-in8" src="img/input_white_144.png" class= "my_img" alt = "8" ><div  id ='In8name'></div><input type="text" id = "input8name" class = "my_form_input" name ="8" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video8 name"></div>
+        <div id = 'in9'class="col-md-1-10 my-Col" ><span id = "in9Label"></span><img  id="img-in9" src="img/input_white_144.png" class= "my_img" alt = "9" ><div  id ='In9name'></div><input type="text" id = "input9name" class = "my_form_input" name ="9" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video9 name"></div>
+        <div id = 'in10'class="col-md-1-10 my-Col" ><span id = "in10Label"></span><img id="img-in10" src="img/input_white_144.png" class= "my_img" alt = "10" ><div  id ='In10name'></div><input type="text" id = "input10name" class = "my_form_input" name ="10" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video10 name"></div>
+    </div>
+
+    <div id = 'Inputrow2' class="row">
+        <div id = 'in11'class="col-md-1-10 my-Col" ><span id = "in11Label"></span><img  id="img-in11" src="img/input_white_144.png" class= "my_img" alt = "11" ><div  id ='In11name'></div><input type="text" id = "input11name" class = "my_form_input" name ="11" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video11 name"></div>
+        <div id = 'in12'class="col-md-1-10 my-Col" ><span id = "in12Label"></span><img  id="img-in12" src="img/input_white_144.png" class= "my_img" alt = "12" ><div  id ='In12name'></div><input type="text" id = "input12name" class = "my_form_input" name ="12" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video12 name"></div>
+        <div id = 'in13'class="col-md-1-10 my-Col" ><span id = "in13Label"></span><img  id="img-in13" src="img/input_white_144.png" class= "my_img" alt = "13" ><div  id ='In13name'></div><input type="text" id = "input13name" class = "my_form_input" name ="13" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video13 name"></div>
+        <div id = 'in14'class="col-md-1-10 my-Col" ><span id = "in14Label"></span><img  id="img-in14" src="img/input_white_144.png" class= "my_img" alt = "14" ><div  id ='In14name'></div><input type="text" id = "input14name" class = "my_form_input" name ="14" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video14 name"></div>
+        <div id = 'in15'class="col-md-1-10 my-Col" ><span id = "in15Label"></span><img  id="img-in15" src="img/input_white_144.png" class= "my_img" alt = "15" ><div  id ='In15name'></div><input type="text" id = "input15name" class = "my_form_input" name ="15" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video15 name"></div>
+        <div id = 'in16'class="col-md-1-10 my-Col" ><span id = "in16Label"></span><img  id="img-in16" src="img/input_white_144.png" class= "my_img" alt = "16" ><div  id ='In16name'></div><input type="text" id = "input16name" class = "my_form_input" name ="16" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video16 name"></div>
+        <div id = 'in17'class="col-md-1-10 my-Col" ><span id = "in17Label"></span><img  id="img-in17" src="img/input_white_144.png" class= "my_img" alt = "17" ><div  id ='In17name'></div><input type="text" id = "input17name" class = "my_form_input" name ="17" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video17 name"></div>
+        <div id = 'in18'class="col-md-1-10 my-Col" ><span id = "in18Label"></span><img  id="img-in18" src="img/input_white_144.png" class= "my_img" alt = "18" ><div  id ='In18name'></div><input type="text" id = "input18name" class = "my_form_input" name ="18" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video18 name"></div>
+        <div id = 'in19'class="col-md-1-10 my-Col" ><span id = "in19Label"></span><img  id="img-in19" src="img/input_white_144.png" class= "my_img" alt = "19" ><div  id ='In19name'></div><input type="text" id = "input19name" class = "my_form_input" name ="19" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video19 name"></div>
+        <div id = 'in20'class="col-md-1-10 my-Col" ><span id = "in20Label"></span><img id="img-in20" src="img/input_white_144.png" class= "my_img" alt = "20" ><div  id ='In20name'></div><input type="text" id = "input20name" class = "my_form_input" name ="20" maxlength = "10" oninput="mySourceInput(name)" value = "" placeholder=" Video20 name"></div>
+    </div>
+  
+
+    </div>
+
+    <div id = 'sg350ConfigContainer' class="container my-Container overflow-auto">
+
+      <div id = "sg350confingRow1" class = "row mySG350Form ">
+          <div class="col my-col">
+            <p>Your Cisco SG350 Switch must be first configured correctly. Contact us if you are unsure before proceeding</p>
+          </div>
+
+        <div class="col my-col">
+          <div id = "TXSelect" class="form ">
+            <label for="TXSelect">Video Inputs (TX):</label>
+            <select class="form-control" id="TXports">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                <option>13</option>
+                <option>14</option>
+                <option>15</option>
+                <option>16</option>
+                <option>17</option>
+                <option>18</option>
+                <option>19</option>
+                <option>20</option>
+              </select>
+            <br>
+          </div>
+
+        </div>
+        <div class="col my-col ">
+          <div id = "RXSelect" class="form ">
+                <label for="RXSelect">Displays (RX):</label>
+                <select class="form-control" id="RXports">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                    <option>13</option>
+                    <option>14</option>
+                    <option>15</option>
+                    <option>16</option>
+                    <option>17</option>
+                    <option>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                    <option>21</option>
+                    <option>22</option>
+                    <option>23</option>
+                    <option>24</option>
+                    <option>25</option>
+                    <option>26</option>
+                    <option>27</option>
+                    <option>28</option>
+                    <option>29</option>
+                    <option>30</option>
+                    <option>31</option>
+                    <option>32</option>
+                    <option>33</option>
+                    <option>34</option>
+                    <option>35</option>
+                    <option>36</option>
+                    <option>37</option>
+                    <option>38</option>
+                    <option>39</option>
+                    <option>40</option>
+                    <option>41</option>
+                    <option>42</option>
+                    <option>43</option>
+                    <option>44</option>
+                    <option>45</option>
+                    <option>46</option>
+                    <option>47</option>
+                    <option>48</option>
+                    <option>49</option>
+                    <option>50</option>
+                </select>
+                <br>
+              </div>
+
+                  
+         </div>
+         <div class="col my-col"></div>
+
+      </div>
+        <!-- ////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <div id = "sg350confingRow2" class = "row mySG350Form ">
+          <div class="col-4 my-col">1</div>
+          <div class="col-4 my-col">
+            <div class="form" >
+              <label for="usr">IP Address of Cisco Switch</label>
+              <input id="ipAddressOfSwitch" type="text" maxlength="15" class="form-control"  >
+            </div>
+          </div>
+          <div class="col-4 my-col">3</div>
+
+        </div>
+        <!-- /////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+        <div id = "sg350SubmitCancel" class="row">
+          <div class="col-md-2 my-Col" ></div>
+          <div class="col-md-2 my-Col"></div>
+  
+          <div class="col-md-2 my-Col">
+            <button id = 'sg350-save-btn' type="button" class=" btn btn-primary btn-block" onclick = "sg350ConfigSubmitBtn()">
+              <span class= "fas fa-file-export" aria-hidden="true"></span> Save
+            </button>
+          </div>
+          <div class="col-md-2 my-Col">
+            <button id = 'sg350-cancel-btn' type="button" class=" btn btn-danger btn-block" onclick = "sg350ConfigHide()">
+              <span class="fas fa-times" aria-hidden="true"></span> Cancel
+            </button>
+          </div>
+      </div>
+
+      <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    </div>
+
+    
+</div>
+
+<nav id = "mynavbar" class="navbar fixed-bottom navbar-expand-sm bg-dark justify-content-center ">
+  <ul  class="navbar-nav">
+      <li class="nav-item my_spacing">
+          <img id ='img-home' src="img/home_white.png" height = 48px width =48px  alt="home" >
+          <span class="navbar-text text-white">Home</span>
+        </li>
+
+    <li  class="nav-item">
+        <img id ='img-TV-All' src="img/all_tv_white_sm.png" height = 48px width =48px  alt="allTV" >
+        <span class="navbar-text text-white">All TVs</span>
+    </li>
+
+    <li class="nav-item my_spacing">
+      <img id ='img-TV-Fav' src="img/bookmark_white.png"  height = 48px width =48px >
+      <span class="navbar-text text-white">Favorite</span>
+    </li>
+
+  </ul>
+
+</nav>
+
+<script>
+
+    var serverIP =location.hostname + ":3000";  // IP +  based on the URL in the WebBrowser
+
+    var userIN_TV_Names =
+          {"tv1":"","tv2":"","tv3":"","tv4":"","tv5":"","tv6":"","tv7":"","tv8":"","tv9":"","tv10":"",
+          "tv11":"","tv12":"","tv13":"","tv14":"","tv15":"","tv16":"","tv17":"","tv18":"","tv19":"","tv20":"",
+          "tv21":"","tv22":"","tv23":"","tv24":"","tv25":"","tv26":"","tv27":"","tv28":"","tv29":"","tv30":"",
+          "tv31":"","tv32":"","tv33":"","tv34":"","tv35":"","tv36":"","tv37":"","tv38":"","tv39":"","tv40":"",
+          "in1":"","in2":"","in3":"","in4":"","in5":"","in6":"","in7":"","in8":"","in9":"","in10":"",
+          "in11":"","in12":"","in13":"","in14":"","in15":"","in16":"","in17":"","in18":"","in19":"","in20":""
+          }
+
+    var userIN_TV_Names_OBJ = {}; // User stored Input and TV Names
+    var userFavorite_Scene_OBJ ={}; // User stored Favorite
+
+    var TVSelect = '1'
+    var SourceSelect = '1'
+    var currentScene =
+                      {"tv1" :"1", "tv2" :"1", "tv3" :"1", "tv4" :"1", "tv5" :"1", "tv6" :"1", "tv7" :"1", "tv8" :"1", "tv9" :"1", "tv10" :"1",
+                      "tv11" :"1", "tv12" :"1", "tv13" :"1", "tv14" :"1", "tv15" :"1", "tv16" :"1", "tv17" :"1", "tv18" :"1", "tv19" :"1", "tv20" :"1",
+                      "tv21" :"1", "tv22" :"1", "tv23" :"1", "tv24" :"1", "tv25" :"1", "tv26" :"1", "tv27" :"1", "tv28" :"1", "tv29" :"1", "tv30" :"1",
+                      "tv31" :"1", "tv32" :"1", "tv33" :"1", "tv34" :"1", "tv35" :"1", "tv36" :"1", "tv37" :"1", "tv38" :"1", "tv39" :"1", "tv40" :"1"
+                      };
+    var favoriteScene =
+                        {"TV1" :"1", "TV2" :"1", "TV3" :"1", "TV4" :"1", "TV5" :"1", "TV6" :"1", "TV7" :"1", "TV8" :"1", "TV9" :"1", "TV10" :"1",
+                        "TV11" :"1", "TV12" :"1", "TV13" :"1", "TV14" :"1", "TV15" :"1", "TV16" :"1", "TV17" :"1", "TV18" :"1", "TV19" :"1", "TV20" :"1",
+                        "TV21" :"1", "TV22" :"1", "TV23" :"1", "TV24" :"1", "TV25" :"1", "TV26" :"1", "TV27" :"1", "TV28" :"1", "TV29" :"1", "TV30" :"1",
+                        "TV31" :"1", "TV32" :"1", "TV33" :"1", "TV34" :"1", "TV35" :"1", "TV36" :"1", "TV37" :"1", "TV38" :"1", "TV39" :"1", "TV40" :"1"
+                        };
+
+    EventListen_TV_Buttons();    // Create Event Listeners for all TV Buttons
+    EventListenSideMenu_Video_Sources(); // Create Event Listeners for all Input Buttons
+    EventListen_Home();          // Create Event Listeners for Home
+    show_Home();  // Show HOME scene
+    
+
+
+  /*********************************************************************************************************************************/
+  function openSideMenu(_showMode){
+
+    let showMode = _showMode
+      if(showMode == 'showSources'){
+        document.getElementById('my_side-menu').style.width= '20%'  ; // Sets Side Menu  width to = 250px wide. Give it open effect.
+
+        for(i=0;i<=20;i++){
+          document.getElementById( "sideMenuRow"+i).style.display = "block"
+          document.getElementById( "sideMenuRow"+i).style.visibility = "visible"
+
+        }
+          document.getElementById( "sideMenuRow21").style.visibility = "hidden"
+          document.getElementById( "sideMenuRow22").style.visibility = "hidden"
+          document.getElementById( "sideMenuRow23").style.visibility = "hidden"
+
+
+      }else if(showMode =='showSettings'){
+        document.getElementById('my_side-menu').style.width= '20%'  ; // Sets Side Menu  width to = 250px wide. Give it open effect.
+
+        for(i=1;i<=20;i++){
+          document.getElementById( "sideMenuRow"+i).style.display = "none"
+        }
+          document.getElementById( "sideMenuRow0").style.visibility = "hidden"
+          document.getElementById( "sideMenuRow21").style.visibility = "visible"
+          document.getElementById( "sideMenuRow22").style.visibility = "visible"
+          document.getElementById( "sideMenuRow23").style.visibility = "visible"
+
+      }else{}
+
+    }
+
+  /*********************************************************************************************************************************/
+  function closeSideMenu(){
+    document.getElementById('my_side-menu').style.width= '0'  ; // Sets Side Menu  width to = 250px wide. Give it open effect.
+
+  }
+
+
+  /***EventListen_TV_Buttons()******************************************************************************************
+           Add Event Listener to TV Image and Favorite Image
+  **********************************************************************************************************************/
+
+    // Add Event Listener to TV Image and Favorite Image
+    function EventListen_TV_Buttons(){
+
+        //   document.getElementById("img-TV-All").addEventListener("mouseover", function () {
+        //     document.getElementById("img-TV-All").src = 'img/all_tv_blue_sm.png';
+           
+
+        // });
+
+        //   document.getElementById("img-TV-All").addEventListener("mouseout", function () {
+        //        document.getElementById("img-TV-All").src = 'img/all_tv_white_sm.png';
+
+        // });
+
+        document.getElementById("img-TV-All").addEventListener("click", function (alt) {
+
+          TVSelect = this.alt // Track which TV button was clicked. alt = 'allTV' when ALL TV clicked
+
+          for(let i = 1;i<=40; i++){
+              document.getElementById("img-tv" + i).src = 'img/tv_white_144.png';
+              
+
+            }
+           
+
+          document.getElementById("img-TV-All").src = 'img/all_tv_blue_sm.png';
+
+          openSideMenu('showSources')
+          
+
+        });
+
+        // Favorite
+        document.getElementById("img-TV-Fav").addEventListener("mouseover", function () {
+          document.getElementById("img-TV-Fav").src = 'img/bookmark_blue.png';
+
+        });
+
+        document.getElementById("img-TV-Fav").addEventListener("mouseout", function () {
+          document.getElementById("img-TV-Fav").src = 'img/bookmark_white.png';
+
+        });
+
+        document.getElementById("img-TV-Fav").addEventListener("click", function () {
+
+            SwitchToFavoriteScene();
+
+        });
+
+     // TV's
+
+      for (let i = 1; i <= 40; i++) {
+
+        //   document.getElementById("img-tv" + i).addEventListener("mouseover", function () {
+        //     document.getElementById("img-tv" + i).src = 'img/tv_blue_144.png';
+        // });
+
+        //    document.getElementById("img-tv" + i).addEventListener("mouseout", function () {
+        //       document.getElementById("img-tv" + i).src = 'img/tv_white_144.png';
+             
+        //  });
+
+          document.getElementById("img-tv" + i).addEventListener("click", function (alt) {
+
+
+            TVSelect = this.alt // Track which TV button was clicked.
+            update_tv_sources_available(openSideMenu('showSources'));
+            for(let i = 1;i<=40; i++){
+              document.getElementById("img-tv" + i).src = 'img/tv_white_144.png';
+
+            }
+            document.getElementById("img-TV-All").src = 'img/all_tv_white_sm.png';
+
+            document.getElementById("img-tv" + i).src = 'img/tv_blue_144.png';
+
+        });
+
+      }
+
+    }
+
+    /***EventListenSideMenu_Video_Sources()******************************************************************************************
+            Add Event Listener to the Side Menu Video Sources
+    **********************************************************************************************************************/
+
+    function EventListenSideMenu_Video_Sources(){
+
+      for (let i = 1; i <= 20; i++) {
+
+        document.getElementById("sideMenuRow" + i).addEventListener("click", function (title) {
+                    
+             SourceSelect = this.title // Track which Source button was clicked.
+   
+          // Send Switch Commands
+          if(parseInt(TVSelect) <= 40){// Single TV Selected
+          
+            alert("Switching "+userIN_TV_Names_OBJ['tv'+TVSelect] + " to " + userIN_TV_Names_OBJ['in'+this.title] );
+
+            // Send to Express to save in 'UserSwitchStatus.txt'
+            saveUserSwitchStatus('singleTV')
+
+            //Send API Command to Express to do switching
+            // fetch("http://"+serverIP+"/switchRX/"+(parseInt(TVSelect)+8)+"/vlan/"+(parseInt(SourceSelect)+1)); //For Custom UI
+            fetch("http://"+serverIP+"/switchRX/"+(parseInt(TVSelect))+"/vlan/"+(parseInt(SourceSelect)+1)); //For Standard UI. Comment out for Customer UI
+
+          }else if(TVSelect=='allTV'){ //All TV Selected
+        
+            alert("Switching All TV's" + " to " + userIN_TV_Names_OBJ['in'+this.title] );
+
+            saveUserSwitchStatus('allTV')
+
+            //Send API Command to Express to do switching
+            //fetch("http://"+serverIP+"/switchAll/start/" + 9 + "/end/"+24+"/vlan/"+(parseInt(SourceSelect)+1)); // For Custom UI
+
+            fetch("http://"+serverIP+"/switchAll/vlan/"+(parseInt(SourceSelect)+1)); //For Standard UI. Comment out for Customer UI
+         
+          }else{}
+     
+        })
+      }
+
+    }
+
+    /***EventListen_Home_Button()******************************************************************************************
+
+    **************************************************************************************************************/
+    function EventListen_Home(){
+
+      document.getElementById("img-home").addEventListener("mouseover", function () {
+
+          document.getElementById("img-home").src = 'img/home_blue.png';
+
+      });
+      document.getElementById("img-home").addEventListener("mouseout", function () {
+
+          document.getElementById("img-home").src = 'img/home_white.png';
+
+      });
+
+      document.getElementById("img-home").addEventListener("click", function () {
+
+        show_Home();
+
+      });
+
+    }
+
+
+    /*** show_Home() *********************************************************************************************
+
+    **************************************************************************************************************/
+    function show_Home(){
+
+        hide_TX_Input()
+        hide_input_forms()
+        hide_Save_Cancel_button()
+   
+
+      // Show bottom NavBar
+        document.getElementById("mynavbar").style.visibility = "visible";
+
+      // Show Hamburger Menu
+        document.getElementById( "hamburger_menu").style.visibility = "visible";
+
+      // Show available TV icons
+        update_tv_sources_available();
+
+     // Show Source connected for TV icon
+      tvStatus()
+    
+     // Hide the SG350 config DOM Elements
+      sg350ConfigHide()
+
+      
+    }
+
+    /*** update_tv_sources_available(callback) *********************************************************************
+      1.Read from saved file: UserInputNames.txt
+      2.Update available TV icons
+      3. Update available Source icons
+    **************************************************************************************************************/
+      function update_tv_sources_available(){
+
+ 
+            //  Read from TX1 stored values and show only the Active TV Img and labels
+            read_from_TX1("UserInputNames",function(){
+
+              //  Show only the Active TV Img and TV Name Title
+                for(let i= 1; i<=40; i++){
+
+                    // To Enable the TV img on mouse/pointer.
+                    document.getElementById("img-tv"+i).style.pointerEvents = 'auto';
+
+                    if(userIN_TV_Names_OBJ['tv'+i] =='empty' ){ // Not Used. Leave Hidden
+                      document.getElementById("tv"+i+"Label").style.visibility = "hidden";
+                     document.getElementById("img-tv"+i).style.visibility = "hidden";
+                      document.getElementById("tv"+i+"source").style.display= "hidden";
+
+                    }else{
+                      document.getElementById("img-tv"+i).style.display = "block";
+                      document.getElementById("img-tv"+i).style.visibility = "visible";
+
+                      document.getElementById("tv"+i+"source").style.visibility = "visible";  ;
+                      document.getElementById("tv"+i+"Label").innerHTML = userIN_TV_Names_OBJ['tv'+i];
+
+                }
+
+              //  Show only the Source Img and Title
+                for(let i= 1; i<=20; i++){
+
+                  if(userIN_TV_Names_OBJ['in'+i] =='empty' ){  // Not Used. Leave Hidden
+                    document.getElementById("sideMenuRow"+i).style.display = "block"
+                    document.getElementById("sideMenuRow"+i).style.visibility = "hidden"
+
+                  }else{
+                    document.getElementById("sideMenuRow"+i).style.display = "block";
+                    document.getElementById("sideMenuRow"+i).style.visibility = "visible";
+                    document.getElementById("sourceName"+i).innerHTML = userIN_TV_Names_OBJ['in'+i];
+
+                  }
+                }
+
+            }
+      })
+    }
+
+    /*** tvStatus(callback) ***************************************************************************************
+      1.Read from saved file: UserInputNames.txt
+      2.Read from saved file: UserSwitchStatus.txt
+      2.Update TV with current selection
+
+    **************************************************************************************************************/
+    function tvStatus(){
+      //  Read from UserInputNames.txt
+      read_from_TX1("UserInputNames",function(){
+
+          //  Read from UserSwitchStatus.txt
+          read_from_TX1("UserSwitchStatus",function(){
+
+              //  Show only the Active TV Img and labels
+              for(let i= 1; i<=40; i++){
+
+                // To Enable the TV img on mouse/pointer.
+                document.getElementById("img-tv"+i).style.pointerEvents = 'auto';
+
+                if(userIN_TV_Names_OBJ['tv'+i] =='empty' ){ // Not Used. Leave Hidden
+                document.getElementById("tv"+i+"Label").style.visibility = "hidden";
+                document.getElementById("img-tv"+i).style.visibility = "hidden";
+                document.getElementById("tv"+i+"source").style.display= "hidden";
+                document.getElementById("tv"+i+"source").style.visibility = "hidden";
+                }else{
+                  document.getElementById("img-tv"+i).style.display = "block";
+                  document.getElementById("img-tv"+i).style.visibility = "visible";
+                  document.getElementById("tv"+i+"source").style.display= "block";
+                  document.getElementById("tv"+i+"source").style.visibility = "visible";
+                  document.getElementById("tv"+i+"source").innerText= userIN_TV_Names_OBJ['in'+currentScene['tv'+i]];
+                }
+            }
+            })
+
+      })
+}
+
+
+    /*** show_Devices() *******************************************************************************************
+
+    **************************************************************************************************************/
+    function show_Devices(){
+
+        show_RX_TV(); // Show all RX and TV Img first.
+        show_TX_Input();
+        show_input_forms();
+        show_Save_Cancel_button();
+
+      // Hide bottom NavBar
+       document.getElementById("mynavbar").style.visibility = "hidden";
+
+      // Hide Hamburger Menu
+       document.getElementById( "hamburger_menu").style.visibility = "hidden";
+
+      // Close the Side Menu
+      closeSideMenu()
+
+      // Do not display TV and Video Input Image
+      for(i=1;i<=40;i++){
+        document.getElementById("img-tv"+i).style.display = "none";
+        document.getElementById("tv"+i+"source").style.display= "none";
+
+      }
+      for(i=1;i<=20;i++){
+        document.getElementById("img-in"+i).style.display = "none";
+      }
+
+  }
+
+    /*** Hide Save and Cancel Button **********************************************************************************
+
+    **************************************************************************************************************/
+    function hide_Save_Cancel_button(){
+
+        document.getElementById("save-btn").style.visibility = "hidden";
+        document.getElementById("cancel-btn").style.visibility = "hidden";
+    }
+
+    /*** Hide Save and Cancel Button **********************************************************************************
+
+    **************************************************************************************************************/
+    function show_Save_Cancel_button(){
+
+    document.getElementById("save-btn").style.visibility = "visible";
+    document.getElementById("cancel-btn").style.visibility = "visible";
+    }
+
+    /*** Hide all RX and TV img **********************************************************************************
+        Hide all the RX and TV img elements from display
+    **************************************************************************************************************/
+    function hide_RX_TV(){
+
+      for(let i= 1; i<=40; i++){
+        document.getElementById("tv"+i).style.display = "none";
+        document.getElementById("tv"+i).style.visibility = "hidden";
+
+      }
+
+    }
+    /*** Show all RX and TV img **********************************************************************************
+        Show all the RX and TV img elements
+    **************************************************************************************************************/
+    function show_RX_TV(){
+
+      for(let i= 1; i<=40; i++){
+        document.getElementById("tv"+i).style.display = "block";
+        document.getElementById("tv"+i).style.visibility = "visible";
+        document.getElementById("tv"+i+"Label").style.display = "block";
+        document.getElementById("tv"+i+"Label").style.visibility = "visible";
+        document.getElementById("tv"+i+"Label").innerHTML = "RX"+i;
+        document.getElementById("img-tv"+i).style.visibility = "visible";
+      }
+
+    }
+    /*** Hide all TX and Input img **********************************************************************************
+        Hide all the TX and Input img elements from display
+    **************************************************************************************************************/
+    function hide_TX_Input(){
+
+          for(let i= 1; i<=20; i++){
+            document.getElementById("in"+i).style.display = "none";
+            document.getElementById("in"+i).style.visibility = "hidden";
+
+          }
+    }
+    /*** Show all TX and Input img **********************************************************************************
+        Show all the TX and Input img elements from display
+    **************************************************************************************************************/
+    function show_TX_Input(){
+
+        for(let i= 1; i<=20; i++){
+          document.getElementById("in"+i).style.display = "block";
+          document.getElementById("in"+i).style.visibility = "visible";
+          document.getElementById("in"+i+"Label").innerHTML = "TX"+i;
+          document.getElementById("img-in"+i).style.visibility = "visible";
+          document.getElementById("img-in" + i).src = 'img/input_white_144.png';
+        }
+    }
+
+
+    /*** hide_input_forms() **********************************************************************************
+        Hide Input Forms
+    **************************************************************************************************************/
+      function hide_input_forms(){
+
+        for(let i= 1; i<=40; i++){
+          document.getElementById("inputTV"+i+"name").style.display = "none";
+          document.getElementById("inputTV"+i+"name").style.visibility = "hidden";
+        }
+        for(let i= 1; i<=20; i++){
+          document.getElementById("input"+i+"name").style.display = "none";
+          document.getElementById("input"+i+"name").style.visibility = "hidden";
+        }
+      }
+
+    /*** show_input_forms() **********************************************************************************
+       1. Show the User Input Names for the RX/TV
+       2. Show the User Input Names for the TX/Sources
+    **************************************************************************************************************/
+      function show_input_forms(){
+
+        for(let i= 1; i<=40; i++){
+          document.getElementById("inputTV"+i+"name").style.display = "block";
+          document.getElementById("inputTV"+i+"name").style.visibility = "visible";
+
+          if(userIN_TV_Names_OBJ['tv'+i]=='empty'){
+            //do nothing
+          }else{
+            document.getElementById("inputTV"+i+"name").value = userIN_TV_Names_OBJ['tv'+i]
+          }
+
+        }
+        for(let i= 1; i<=20; i++){
+          document.getElementById("input"+i+"name").style.display = "block";
+          document.getElementById("input"+i+"name").style.visibility = "visible";
+
+
+          if(userIN_TV_Names_OBJ['in'+i]=='empty'){
+            //do nothing
+          }else{
+            document.getElementById("input"+i+"name").value = userIN_TV_Names_OBJ['in'+i]
+          }
+
+        }
+      }
+
+    /***saveUserInputs()*****************************************************************************************
+            Save what the user typed in for TV and Sources names
+            Convert to String then Send to TX1 and save as 'user_IN_TV_Names_DB'
+
+            {
+            "tv1: "","tv2: "", ..."tv40: "",
+            "in1: "","in2: "", "in20: "","
+            }
+
+    **************************************************************************************************************/
+    function saveUserInputs(){
+
+      // Read TV Input form entries
+          for(let i=1;i<=40;i++){
+
+            if(document.getElementById("inputTV" + i + "name").value ==''){
+
+              userIN_TV_Names['tv'+i] =  "empty";
+
+            }else {
+              userIN_TV_Names['tv'+i] = document.getElementById("inputTV" + i + "name").value;
+
+            }
+
+          }
+
+      // Read Video Input form entries
+          for(let i=1;i<=20;i++){
+
+            if(document.getElementById("input" + i + "name").value==''){
+
+              userIN_TV_Names['in'+i] = "empty";
+
+            }else {
+
+              userIN_TV_Names['in'+i] = document.getElementById("input" + i + "name").value ;
+
+            }
+
+          }
+
+        // Send to Express to save in 'UserInputNames.txt'
+
+          fetch("http://"+serverIP+"/write/UserInputNames/" + JSON.stringify(userIN_TV_Names))
+          .then(function(data) {
+
+            show_Home();
+
+          })
+          .catch(error => console.log(error));
+
+    }
+
+    /*****saveUserSwitchStatus() *************************************************************************************
+      1. Call Express API to save current switching status to UserSwitchStauts.txt
+     *****************************************************************************************************************/
+    function saveUserSwitchStatus(_mode){
+    let mode = _mode
+
+    if(mode == 'singleTV'){
+ 
+      currentScene["tv"+TVSelect] = SourceSelect;
+    }
+    else if(mode =='allTV'){
+      for(i=1;i<=40;i++){
+        currentScene["tv"+i] = SourceSelect;
+      }
+    }
+    
+    fetch("http://"+serverIP+"/write/UserSwitchStatus/" + JSON.stringify(currentScene))
+    .then(function(data) {
+      tvStatus()
+    })
+    .catch(error => console.log(error));
+     
+    }
+
+    /***read_from_TX1(callback)*****************************************************************************************
+        1.Call Express via API
+        2.Express will read from one of the persistent saved files: UserInputNames.txt, UserFavoriteScene.txt, or UserSwitchStatus.txt
+        3.Then convert it to object format and save as userIN_TV_Names_OBJ
+        Example:
+        userIN_TV_Names_OBJ =
+            {
+            "tv1: "","tv2: "", ..."tv40: "",
+            "in1: "","in2: "", "in20: "","
+            }
+    **************************************************************************************************************/
+    function read_from_TX1(_whichDB ,callback){
+
+          var whichDB = _whichDB;
+          var xhr = new XMLHttpRequest();
+
+          xhr.open('GET',"http://"+serverIP+"/read/" + whichDB , true);
+          xhr.send();
+          xhr.onreadystatechange = function() {
+
+                if (this.readyState == 4 && this.status == 200) {
+
+                  if(whichDB == "UserInputNames"){
+
+                    userIN_TV_Names_OBJ = JSON.parse(this.responseText)
+
+
+                  }else if (whichDB == "UserFavoriteScene" ){
+
+                    userFavorite_Scene_OBJ = JSON.parse(this.responseText); //
+
+                  }else if(whichDB == "UserSwitchStatus"  ){
+
+                    currentScene = JSON.parse(this.responseText); //
+
+                  }
+
+                  callback();
+
+                  }else{
+                  //Do Nothing
+                }
+
+          };
+
+    }
+
+
+    /***  saveFavoriteScene  **********************************************************************************************
+
+          Save currentScene{} to TX1 as favoriteScene
+          1. Get RX Ch Feedback
+          2. Write to TX1 as FavoriteScene_DB
+
+    **************************************************************************************************************/
+    function saveFavoriteScene(){
+
+    // Read the Video Input Source Names
+
+      for (let i = 1;i<=40;i++){
+
+        // Get feedback for all declared TV
+        if(userIN_TV_Names_OBJ['tv'+i] != 'empty'){
+
+        fetch('http://172.31.3.'+(i)+'/cgi-bin/query.cgi?cmd=astparam g ch_select')
+        .then(function(res) {
+        // Here you get the data to modify as you please
+
+          return res.text()
+
+        })
+        .then(function(data){
+
+          favoriteScene["TV"+i] = (data);
+
+        })
+
+        .catch(error => console.log(error))
+
+        }  else {
+        // Do nothing
+        }
+
+      }
+
+      //Wait 5 seconds before writing in to TX1. Try promise.all for improvement!
+      setTimeout(function(){
+
+
+              // Send / Write to TX1 and save as 'user_IN_TV_Names_DB'
+
+          fetch("http://172.31.2.1/cgi-bin/query.cgi?cmd=astparam s FavoriteScene_DB " + JSON.stringify(favoriteScene))
+          .then(function(data) {
+              // Save
+              fetch("http://172.31.2.1/cgi-bin/query.cgi?cmd=astparam save")
+              .then(function(data) {
+                  // Here you get the data to modify as you please
+                  alert("Saved Current Scene as Favorite");
+
+
+              })
+              .catch(error => console.log(error));
+
+          })
+          .catch(error => console.log(error));
+
+      }, 5000);
+
+    }
+
+
+    /***  SwitchToFavoriteScene()  **********************************************************************************************
+
+
+
+    **************************************************************************************************************/
+    function SwitchToFavoriteScene(){
+
+      read_from_TX1("FavoriteScene_DB" ,function(){
+
+        for (let i = 1;i<=40;i++){
+
+          //Do only if TV is defined by user
+          if(userIN_TV_Names_OBJ['tv'+i] != 'empty'){
+
+          // Switch TV to Favorite
+          fetch('http://172.31.3.'+(i)+'/cgi-bin/query.cgi?cmd=rxswitch:'+ userFavorite_Scene_OBJ['TV'+i].slice(1))  //slice(1) need to remove the lead "0" from RX Ch Feedback "0001" to "0001" so rxswitch will work.
+           .then(function(data) {
+           // Here you get the data to modify as you please
+           })
+           .catch(error => console.log(error));
+          }else{
+            //
+          }
+
+        }
+
+      })
+
+
+    }
+
+    /*********************************************************************************************************/
+    function SystemConfig(){
+   
+      closeSideMenu()
+      for (i= 1;i<=40;i++){
+        document.getElementById("tv"+i).style.display = "none";
+
+      }
+     
+      document.getElementById("sg350ConfigContainer").style.display = "block";
+
+    let xhr = new XMLHttpRequest();
+
+//   Read from UserSwitchConfig.txt and update the SG350 DOM Elements
+      xhr.open('GET',"http://"+serverIP+"/read/UserSwitchConfig" , true);
+      xhr.send();
+      xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+             console.log(this.response)
+             document.getElementById('ipAddressOfSwitch').value = JSON.parse(this.response)['ip']
+             document.getElementById('TXports').value = JSON.parse(this.response)['TXports']
+             document.getElementById('RXports').value = JSON.parse(this.response)['RXports']
+
+            }else{
+              //Do Nothing
+            }
+      };
+
+    }
+    /******************************************************************************************************/
+    function sg350ConfigSubmitBtn(){
+      let sg350Config = {"ip":"","TXports": "","RXports":""}
+
+      sg350Config['ip'] = document.getElementById('ipAddressOfSwitch').value
+      sg350Config['TXports'] = document.getElementById('TXports').value
+      sg350Config['RXports'] = document.getElementById('RXports').value
+       
+      fetch("http://"+serverIP+"/write/UserSwitchConfig/" + JSON.stringify(sg350Config))
+      .then(function(data) {
+        tvStatus()
+      })
+      .catch(error => console.log(error));
+
+     document.getElementById("sg350ConfigContainer").style.display = "none";
+     for (i= 1;i<=40;i++){
+        document.getElementById("tv"+i).style.display = "none";
+
+      }
+      show_Home()
+    }
+   
+    /******************************************************************************************************/
+    function sg350ConfigHide(){
+     
+      document.getElementById("sg350ConfigContainer").style.display = "none";
+
+      for (i= 1;i<=40;i++){
+        document.getElementById("tv"+i).style.display = "block";
+
+      }
+           
+    }
+
+    </script>
+
+  </body>
+</html>
+
+
