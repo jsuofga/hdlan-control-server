@@ -85,7 +85,7 @@ app.post('/', function (req, res){
     form.parse(req);
 
     form.on('fileBegin', function (name, file){
-        //file.path = __dirname + '/uploads/' + file.name;
+       
         file.path = __dirname + '/public/' + file.name;
     });
 
@@ -110,6 +110,8 @@ app.get('/switchAll/vlan/:vlan', function(req,res){
     let startRX= 0; // RX should be connected to offset RX + offsetRX based on UserSwitchConfig.txt
     let lastRX = 0;  //  Port that the last RX is connected to
 
+    res.send('OK!');
+
     ConnectToCisco();
 
     //Read Switch Configuration to determine which port RX is mapped to
@@ -119,8 +121,7 @@ app.get('/switchAll/vlan/:vlan', function(req,res){
             
         startRX = parseInt(JSON.parse(data).TXports) + 1
         lastRX = parseInt(JSON.parse(data).TXports) + parseInt(JSON.parse(data).RXports )
-        // console.log(startRX)
-        // console.log(lastRX )
+    
         
     })
 
@@ -138,6 +139,9 @@ app.get('/switchRX/:rx/vlan/:vlan', function (req,res){
     let vlan = req.params.vlan
     let offsetRX = 0; // RX should be connected to offset RX + offsetRX based on UserSwitchConfig.txt
 
+
+    res.send('OK!');
+
     ConnectToCisco();
 
     //Read Switch Configuration to determine which port RX is mapped to
@@ -146,12 +150,12 @@ app.get('/switchRX/:rx/vlan/:vlan', function (req,res){
       // res.send(data) 
         
         offsetRX = parseInt(JSON.parse(data).TXports)
-        // console.log(parseInt(rx)+offsetRX)
-        // console.log(vlan)
+
     
     })
 
     // SG350 switchport access
+  
     setTimeout(function(){ connection.exec('config\rinterface range gi'+(parseInt(rx)+offsetRX)+'\rswitchport access vlan'+ vlan+'\r'), function(err, data) {
      
     }}, 500);
@@ -181,7 +185,7 @@ app.get('/switchRX/:rx/vlan/:vlan', function (req,res){
 //     let rx = req.params.rx
 //     let vlan = req.params.vlan
 //     let offsetRX = 0; // RX should be connected to offset RX + offsetRX based on UserSwitchConfig.txt
-
+ 
 //     ConnectToCisco();
 
 //     //Read Switch Configuration to determine which port RX is mapped to
@@ -202,6 +206,35 @@ app.get('/switchRX/:rx/vlan/:vlan', function (req,res){
 
 //})
 
+// Switch Preset 1,2,3 Route ---------------------------------------------------------------------------------------------------
+app.get('/switchRX/UserPreset/:preset', function (req,res){
+ 
+    res.send('OK!');
+
+    var UserSwitchConfig_Obj = JSON.parse(fs.readFileSync('public/UserSwitchConfig.txt',"utf8")) //synchronous
+    var UserInputNames_Obj = JSON.parse(fs.readFileSync('public/UserInputNames.txt',"utf8")) //synchronous
+    var UserFavorite_Obj = JSON.parse(fs.readFileSync("public/UserPreset" + req.params.preset + ".txt" ,"utf8")) //synchronous
+
+
+   ConnectToCisco();
+
+    setTimeout(function(){ 
+        for(i=1;i<=40;i++){  // Find the index of TV that is declared as "empty. For example, if tv5 = 'empty' then ignore all rx >5 "
+
+            if(UserInputNames_Obj['tv'+i] !='empty'){
+
+               connection.exec('config\rinterface gi'+(parseInt(UserSwitchConfig_Obj['TXports'])+i)+'\rswitchport access vlan'+ ((parseInt(UserFavorite_Obj['tv'+i]))+1) +'\r')
+                
+            }else {
+                break;
+            }
+        }
+            
+    }, 1000);
+      
+
+})
+
 // Read User Stored Inputs Route. Send back JSON  -----------------------------------------------------------------------------------------------
 app.get('/read/:userinput', function(req,res){
 
@@ -218,11 +251,25 @@ app.get('/read/:userinput', function(req,res){
             res.send(data)        
         })
 
-    }else if(userinput == 'UserFavoriteScene'){
-        fs.readFile('public/UserFavoriteScene.txt',"utf8", function (err, data) {
+    }else if(userinput == 'UserPreset1'){
+        
+        fs.readFile('public/UserPreset1.txt', "utf8",function (err,data) {
             if (err) throw err;
-            res.send(data)        
-        })
+            res.send(data) 
+        });
+    }else if(userinput == 'UserPreset2'){
+        
+        fs.readFile('public/UserPreset2.txt', "utf8",function (err,data) {
+            if (err) throw err;
+            res.send(data) 
+        });
+
+    }else if(userinput == 'UserPreset3'){
+        
+        fs.readFile('public/UserPreset3.txt', "utf8",function (err,data) {
+            if (err) throw err;
+            res.send(data) 
+          });
 
     }else if(userinput == 'UserSwitchStatus'){
         fs.readFile('public/UserSwitchStatus.txt',"utf8", function (err, data) {
@@ -245,21 +292,30 @@ app.get('/write/:file/:dataIn', function(req,res){
 
     let userinput = req.params.file
     let dataIn = req.params.dataIn
-
+    
     if(userinput == 'UserInputNames'){
         fs.writeFile('public/UserInputNames.txt',dataIn, function (err, data) {
             if (err) throw err;
             res.send('Updated InputNames')        
         })
+
+    }else if(userinput == 'Preset1'){
         
-    }else if(userinput == 'UserInputNames'){
-        fs.writeFile('public/UserInputNames.txt',userinput, function (err, data) {
+        fs.writeFile('public/UserPreset1.txt',dataIn, function (err, data) {
             if (err) throw err;
             res.send(data)        
         })
 
-    }else if(userinput == 'UserFavoriteScene'){
-        fs.writeFile('public/UserFavoriteScene.txt',userinput, function (err, data) {
+    }else if(userinput == 'Preset2'){
+        
+        fs.writeFile('public/UserPreset2.txt',dataIn, function (err, data) {
+            if (err) throw err;
+            res.send(data)        
+        })
+
+    }else if(userinput == 'Preset3'){
+        
+        fs.writeFile('public/UserPreset3.txt',dataIn, function (err, data) {
             if (err) throw err;
             res.send(data)        
         })
@@ -298,7 +354,7 @@ function ConnectToCisco(){
     }else {
         //Kill currenty Connection , then re-connect
         connection.destroy().then(function(){
-            console.log('destroyed')
+            
             fs.readFile('public/UserSwitchConfig.txt',"utf8", function (err, data) {
                 if (err) {
                     throw err;
