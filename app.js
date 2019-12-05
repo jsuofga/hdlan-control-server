@@ -18,9 +18,7 @@ var fs = require('fs');
 
 app.listen(3000, () => console.log('fileupdate app listening on port 3000!'));
 
-
 app.use(express.static('public')); /* this line tells Express to use the public folder as our static folder from which we can serve static files*/
-
 
 //Telnet-Client Setup
 const Telnet = require('telnet-client')
@@ -93,11 +91,9 @@ app.post('/', function (req, res){
         console.log('Uploaded ' + file.name);
     });
 
-
     res.sendFile(__dirname + '/index_update.html');
 
     return res.send("Upload Done!");
-
 
 });
 
@@ -121,11 +117,11 @@ app.get('/switchAll/vlan/:vlan', function(req,res){
             
         startRX = parseInt(JSON.parse(data).TXports) + 1
         lastRX = parseInt(JSON.parse(data).TXports) + parseInt(JSON.parse(data).RXports )
-    
-        
+          
     })
 
     // SG350 switchport access
+
     setTimeout(function(){connection.exec('config\rinterface range gi'+startRX+'-'+ lastRX +'\rswitchport access vlan'+ vlan+'\r'), function(err,data) {
      
     }},500);
@@ -150,7 +146,6 @@ app.get('/switchRX/:rx/vlan/:vlan', function (req,res){
       // res.send(data) 
         
         offsetRX = parseInt(JSON.parse(data).TXports)
-
     
     })
 
@@ -162,49 +157,39 @@ app.get('/switchRX/:rx/vlan/:vlan', function (req,res){
 
 })
 
-// Switch ALL RX Route (for Customization) ---------------------------------------------------------------------------------------------------
-// app.get('/switchAllCustom/start/:startPort/end/:endPort/vlan/:vlan', function(req,res){
+// API Switch ALL RX Route (for Customized Applications) ---------------------------------------------------------------------------------------------------
+app.get('/switchAllCustom/start/:startPort/end/:endPort/vlan/:vlan', function(req,res){
 
-//     res.send('ALL RX Selected Route')
-//     let start = req.params.startPort
-//     let end = req.params.endPort
-//     let vlan = req.params.vlan
+    res.send('ALL RX Route')
+    let start = req.params.startPort
+    let end = req.params.endPort
+    let vlan = req.params.vlan
 
-//     ConnectToCisco();
+    ConnectToCisco();
 
-//     // SG350 switchport access
-//     setTimeout(function(){connection.exec('config\rinterface range gi'+start+'-'+ end+'\rswitchport access vlan'+ vlan+'\r'), function(err,data) {
+    // SG350 switchport access
+    setTimeout(function(){connection.exec('config\rinterface range gi'+start+'-'+ end+'\rswitchport access vlan'+ vlan+'\r'), function(err,data) {
      
-//     }},500);
+    }},500);
 
-// })
+})
 
-// Switch Single RX Route(for Customization) ---------------------------------------------------------------------------------------------------
-// app.get('/switchRXCustom/:rx/vlan/:vlan', function (req,res){
+// API Switch Single RX Route(for Customization) ---------------------------------------------------------------------------------------------------
+app.get('/switchRXCustom/gi/:gi/vlan/:vlan', function (req,res){
+
+    res.send('Single RX Route')
   
-//     let rx = req.params.rx
-//     let vlan = req.params.vlan
-//     let offsetRX = 0; // RX should be connected to offset RX + offsetRX based on UserSwitchConfig.txt
+    let gi = req.params.gi  //The interface port on Cisco Switch that the RX is connected to.
+    let vlan = req.params.vlan
  
-//     ConnectToCisco();
-
-//     //Read Switch Configuration to determine which port RX is mapped to
-//     fs.readFile('public/UserSwitchConfig.txt',"utf8", function (err, data) {
-//         if (err) throw err;
-//       // res.send(data) 
-        
-//         offsetRX = parseInt(JSON.parse(data).TXports)
-//         // console.log(parseInt(rx)+offsetRX)
-//         // console.log(vlan)
-    
-//     })
-
-//     // SG350 switchport access
-//     setTimeout(function(){ connection.exec('config\rinterface range gi'+(parseInt(rx)+offsetRX)+'\rswitchport access vlan'+ vlan+'\r'), function(err, data) {
+    ConnectToCisco();
+   
+    // SG350 switchport access
+    setTimeout(function(){ connection.exec('config\rinterface gi'+parseInt(gi)+'\rswitchport access vlan'+ vlan+'\r'), function(err, data) {
      
-//     }}, 500);
+    }}, 500);
 
-//})
+})
 
 // Switch Preset 1,2,3 Route ---------------------------------------------------------------------------------------------------
 app.get('/switchRX/UserPreset/:preset', function (req,res){
@@ -215,18 +200,18 @@ app.get('/switchRX/UserPreset/:preset', function (req,res){
     var UserInputNames_Obj = JSON.parse(fs.readFileSync('public/UserInputNames.txt',"utf8")) //synchronous
     var UserFavorite_Obj = JSON.parse(fs.readFileSync("public/UserPreset" + req.params.preset + ".txt" ,"utf8")) //synchronous
 
-
    ConnectToCisco();
 
     setTimeout(function(){ 
-        for(i=1;i<=40;i++){  // Find the index of TV that is declared as "empty. For example, if tv5 = 'empty' then ignore all rx >5 "
+        for(i=1;i<=48;i++){  // Find the index of TV that is declared as "empty. For example, if tv5 = 'empty' then ignore all rx >5 "
 
             if(UserInputNames_Obj['tv'+i] !='empty'){
 
                connection.exec('config\rinterface gi'+(parseInt(UserSwitchConfig_Obj['TXports'])+i)+'\rswitchport access vlan'+ ((parseInt(UserFavorite_Obj['tv'+i]))+1) +'\r')
                 
             }else {
-                break;
+              // Do Nothing.
+              //  break;
             }
         }
             
