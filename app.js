@@ -97,6 +97,41 @@ app.post('/', function (req, res){
 
 });
 
+// PoE Power ---------------------------------------------------------------------------------------------------
+app.get('/poe/:on_off', function(req,res){
+
+       var on_off = req.params.on_off;
+    var total_ports = 0;
+    res.send('OK!');
+
+    ConnectToCisco();
+
+    //Read Switch Configuration
+    fs.readFile('public/UserSwitchConfig.txt',"utf8", function (err, data) {
+        if (err) throw err;
+                  
+       total_ports  = parseInt(JSON.parse(data).TXports) + parseInt(JSON.parse(data).RXports)
+   
+    })
+
+    // SG350 switchport access
+    if(on_off == 'on'){
+        setTimeout(function(){connection.exec('config\rinterface range gi1-'+ total_ports +'\rpower inline auto'+'\r'), function(err,data) {
+     
+        }},500);
+
+    }else if(on_off == 'off' ){
+        setTimeout(function(){connection.exec('config\rinterface range gi1-'+ total_ports +'\rpower inline never'+'\r'), function(err,data) {
+     
+        }},500);
+
+
+    }
+
+
+
+})
+
 
 // Switch ALL RX Route ---------------------------------------------------------------------------------------------------
 app.get('/switchAll/vlan/:vlan', function(req,res){
