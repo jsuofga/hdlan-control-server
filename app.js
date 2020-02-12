@@ -100,7 +100,7 @@ app.post('/', function (req, res){
 // PoE Power ---------------------------------------------------------------------------------------------------
 app.get('/poe/:on_off', function(req,res){
 
-       var on_off = req.params.on_off;
+    var on_off = req.params.on_off;
     var total_ports = 0;
     res.send('OK!');
 
@@ -129,37 +129,39 @@ app.get('/poe/:on_off', function(req,res){
     }
 
 
-
 })
 
 
 // Switch ALL RX Route ---------------------------------------------------------------------------------------------------
-app.get('/switchAll/vlan/:vlan', function(req,res){
+app.get('/switchAll/vlan/:vlan', function (req, res) {
 
    
     let vlan = req.params.vlan
-    let startRX= 0; // RX should be connected to offset RX + offsetRX based on UserSwitchConfig.txt
-    let lastRX = 0;  //  Port that the last RX is connected to
+    var startRX = 0; // RX should be connected to offset RX + offsetRX based on UserSwitchConfig.txt
+    var lastRX = 0;  //  Port that the last RX is connected to
 
     res.send('OK!');
 
     ConnectToCisco();
 
     //Read Switch Configuration to determine which port RX is mapped to
-    fs.readFile('public/UserSwitchConfig.txt',"utf8", function (err, data) {
+    fs.readFile('public/UserSwitchConfig.txt', "utf8", function (err, data) {
         if (err) throw err;
-       // res.send(data) //
+        //res.send(data) 
             
-        startRX = parseInt(JSON.parse(data).TXports) + 1
-        lastRX = parseInt(JSON.parse(data).TXports) + parseInt(JSON.parse(data).RXports )
+        startRX = parseInt(JSON.parse(data).TXports) + 1;
+        lastRX = parseInt(JSON.parse(data).TXports)+parseInt(JSON.parse(data).RXports) ; 
+        
           
     })
 
     // SG350 switchport access
-
+   // setTimeout(function () { console.log(lastRX); }, 1000);
+  
     setTimeout(function(){connection.exec('config\rinterface range gi'+startRX+'-'+ lastRX +'\rswitchport access vlan'+ vlan+'\r'), function(err,data) {
      
     }},500);
+
 
 })
 
@@ -356,6 +358,8 @@ app.get('/write/:file/:dataIn', function(req,res){
   
 
 })
+
+
 //---------------------------------------------------------------------------------------------------
 
 function ConnectToCisco(){
@@ -390,6 +394,7 @@ function ConnectToCisco(){
     }
 
 }
+
 
 
   
