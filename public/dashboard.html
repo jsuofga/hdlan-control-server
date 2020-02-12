@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="view" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Network Switch Status</title>
+    <link rel="icon"  type="image/png"  href="img/octava-site-icon.png">
+   
+    <!-- Font Awesome -->
+    <link href="css/fontawesome-all.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/myCSS.css" rel="stylesheet">
+
+    <!-- Charts.JS -->
+
+    <script src="js/Chart.bundle.min.js"></script>
+
+    <style>
+        .myLine{
+          /* border: 1px solid red; */
+        }
+  
+        .myChartCell{
+          padding: .25em;
+          margin: .25em .25em .25em .25em; 
+          font-weight: bold;
+          color: white;
+          background-color: #343A40;
+        
+        }
+        .myChartCellSwitch{
+          color: white;
+          background-color: black;
+          padding: .25em;
+          outline: #343A40 solid 20px;
+          table-layout: fixed;
+        }
+        .nonPoePorts{
+            /* opacity: 0.5;
+            filter: alpha(opacity=50); */
+        }
+        .mySG350Space{
+          margin-top: 20px ;
+        }
+        .portTX{
+          background-color: #3498db;
+        }
+        .portRX{
+          background-color: #5cb85c;
+        }
+        .legendTX{
+          color: white;
+          background-color: #3498db;
+        }
+        .legendRX{
+          color: white;
+          background-color: #5cb85c;
+        }
+        .legendNetwork{
+          color: white;
+          background-color: black;
+        }
+        .legendPortUp{
+          color: #f0ad4e;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+        .legendPortDown{
+          color: white;
+          font-family: Arial, Helvetica, sans-serif; 
+        }
+        .homeHide{
+          display:none;
+          visibility: hidden;
+        }
+        strong {
+          color: white;
+        }
+             
+    </style>
+
+</head>
+
+<body>
+    <div class="container"  >
+
+          <div class= " row text-center">
+            <div class="col-sm " ><img src="img/octava_logo_white-200.png" width = "10%" ></div>   
+          </div>
+
+          <div class= " row text-center">
+            <div class="col-sm myChartCell ">Network Switch Status Monitoring</div>  
+          </div>
+
+          <div class= " row text-center justify-content-center  myLine">
+            <div class="col-sm myChartCell myLine " >
+              <div><i class="fas fa-network-wired fa-lg" style='color:white;'></i></div>
+              <div><span id = 'chartSwitchModel'>Model : </span></div>
+              <span id = 'chartIPAddress'>IP Address: </span>
+            </div>
+
+            <div class="col-sm myChartCell myLine " >
+              <div><i class="fas fa-plug fa-lg" style='color:white;'></i></div>
+              <span>Power Supply :</span>
+              <span id = 'chartPowerSupplyStatus'>NA</span>
+              
+            </div> 
+
+            <div class="col-sm myChartCell myLine">
+              <div><i class="fas fa-wind fa-lg" style='color:white;'></i></div>
+ 
+              <table class="table table-dark">
+                <tbody>
+                  <tr id = 'fan1Row'>
+                    <th scope="row"> Fan 1</th>
+                    <td id = 'chartFanStatus'>Fan1 Status</td>
+                  </tr>
+                  <tr id = 'fan2Row'>
+                    <th scope="row">Fan 2</th>
+                    <td id = 'chartFan2Status'>Fan2 Status</td>
+                  </tr>
+                  <tr id = 'fan3Row'>
+                    <th scope="row">Fan 3</th>
+                    <td id = 'chartFan3Status'>Fan3 Status</td>
+                  </tr>
+                </tbody>
+              </table>
+             
+            </div>
+        </div>  
+
+        <div class="row text-center myLine">
+          <div class="col-sm myChartCell myLine">
+            <div><i class="fas fa-thermometer-half fa-lg" style='color:white;'></i></div>
+           <canvas id = "myChartTemp"> </canvas>
+          </div>
+
+          <div class="col-sm myChartCell myLine" >
+            <div><i class="fas fa-bolt fa-lg" style='color:white;'></i></div>
+            <canvas id="myChartPoE"></canvas>
+          </div> 
+
+        </div>    
+
+    </div>   
+
+  <div id = 'sg350-52' class="container mySG350Space " >
+    <div class="row text-center mt-2 myLine">
+      <div class="col-sm">
+        <table class="table table-sm table-bordered border my-2 myChartCellSwitch" >
+            <tr >
+              <th id = '52port1' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg" ></i></th>
+              <th id = '52port2' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port3' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port4' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port5' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port6' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port7' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port8' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port9' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port10' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port11' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port12' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port13' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port14' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port15' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port16' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port17' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port18' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port19' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port20' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port21' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port22' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port23' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port24' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port49' scope="col" class="nonPoePorts border-dark"><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port49sfp' scope="col" class="nonPoePorts border-dark"><i class="fas fa-expand fa-lg"></i></th>
+              <th id = '52port51' scope="col" class="nonPoePorts border-dark"><i class="fas fa-expand fa-lg"></i></th>
+            </tr>
+          
+            <tr>
+              <th id = '52port25' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port26' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port27' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port28' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port29' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port30' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port31' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port32' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port33' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port34' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port35' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port36' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port37' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port38' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port39' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port40' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port41' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port42' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port43' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port44' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port45' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port46' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port47' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port48' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port50' scope="col" class = "nonPoePorts border-dark" class = "border-dark" ><i class="fas fa-ethernet fa-lg"></i></th>
+              <th id = '52port50sfp' scope="col" class = "nonPoePorts border-dark" ><i class="fas fa-expand fa-lg"></i></th>
+              <th id = '52port52' scope="col" class = "nonPoePorts border-dark" ><i class="fas fa-expand fa-lg"></i></th>
+            </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id = 'sg350-28' class="container mySG350Space"  >
+    <div class="row text-center mt-2 myLine">
+      <div class="col-sm  ">
+        <table class="table table-sm table-bordered my-2 myChartCellSwitch">
+            <tr>
+              <th id = '28port1' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port2' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port3' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port4' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port5' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port6' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port7' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port8' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port9' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port10' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port11' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port12' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port25' scope="col" class = "nonPoePorts border-dark" ><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port25sfp' scope="col" class = "nonPoePorts border-dark"><i class="fas fa-expand fa-2x"></i></th>
+              <th id = '28port27' scope="col" class = "nonPoePorts border-dark" ><i class="fas fa-expand fa-2x"></i></th>
+            </tr>
+            <tr>
+              <th id = '28port13' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port14' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port15' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port16' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port17' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port18' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port19' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port20' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port21' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port22' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port23' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port24' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port26' scope="col" class = "nonPoePorts border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '28port26sfp' scope="col" class = "nonPoePorts border-dark" ><i class="fas fa-expand fa-2x"></i></th>
+              <th id = '28port28' scope="col" class = "nonPoePorts border-dark"><i class="fas fa-expand fa-2x"></i></th>             
+            </tr>
+        </table>
+        </div>
+    </div>
+  </div>
+
+  <div id = 'sg350-10' class="container mySG350Space "  >
+    <div class="row text-center mt-2 myLine">
+      <div class="col-sm  ">
+        <table class="table table-sm table-bordered my-2 myChartCellSwitch">
+            <tr>
+              <th id = '10port1' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '10port2' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '10port3' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '10port4' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '10port5' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '10port6' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '10port7' scope="col" class = "border-dark" ><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '10port8' scope="col" class = "border-dark"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '10port9' scope="col" class = "nonPoePorts border-dark" class="nonPoe10ports"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '10port9sfp' scope="col" class = "nonPoePorts border-dark"><i class="fas fa-expand fa-2x"></i></th>
+              <th id = '10port10' scope="col" class = "nonPoePorts border-dark" class="nonPoe10ports"><i class="fas fa-ethernet fa-2x"></i></th>
+              <th id = '10port10sfp' scope="col" class = "nonPoePorts border-dark" class="nonPoe10ports"><i class="fas fa-expand fa-2x"></i></th>
+            </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  
+  <div id = 'legend' class="container mySG350Space "  >
+    <div class="row text-center mt-2 myLine ">
+      
+      <div class="col-sm legendTX  align-self-center "  >
+        <p>TX Ports</p>
+      </div>
+      <div class="col-sm  legendRX align-self-center " >
+        <p>RX Ports</p>
+      </div>
+      <div class="col-sm legendNetwork align-self-center"  >
+        <p>Network Ports</p>
+      </div>
+      <div class="col-sm  legendPortUp align-self-center " >
+        <i class="fas fa-ethernet fa-lg"></i><p>Link Up</p>
+      </div>
+      <div class="col-sm legendPortDown align-self-center" >
+        <i class="fas fa-ethernet fa-lg"></i><p>No Link</p>
+      </div>
+
+
+    </div>
+  </div>
+  
+    <div class = "row" style="margin-top:100px" >
+
+      <nav id = "mynavbar" class="navbar fixed-bottom navbar-expand-sm bg-dark justify-content-center ">
+        <ul  class="navbar-nav">
+          <li>
+              <div id = "loading"><strong>Scanning Status...</strong></div>
+              <div class="d-flex justify-content-center" >
+                <div id="spinner" class="spinner-border text-primary " role="status">
+                <span class="sr-only"></span>
+              </div>   
+            </div>
+         
+          </li>
+          <li  class="nav-item my_spacing ">
+              <img id ='img-home'class = 'homeHide' src="img/home_white.png" height = 48px width =48px  alt="home"  onclick = "writeToUserSwitchConfig()">
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+
+</div>
+    
+
+</body>
+
+<script>
+
+
+var API_URL = location.hostname + ":1880/ciscoStat";  // Rest API URL for NodeRed 
+var serverIP =location.hostname + ":3000";  // IP +  based on the URL in the WebBrowser
+var SNMP_Cisco = {};
+var uniqueVlans = '';
+var vlan1Count = '';
+
+// Chart Elements
+document.getElementById('chartSwitchModel').innerText = 'Model : NA ';
+document.getElementById('chartIPAddress').innerText = 'IP Address : NA';
+document.getElementById('chartPowerSupplyStatus').innerText = 'NA';
+document.getElementById('chartFanStatus').innerText = 'NA';
+
+
+// PlugIn for Centering Text in Doughnut Chart /////////////////////////////////////////////////////////////////////////////////////////////////////////
+Chart.pluginService.register({
+  beforeDraw: function (chart) {
+    if (chart.config.options.elements.center) {
+      //Get ctx from string
+      var ctx = chart.chart.ctx;
+
+      //Get options from the center object in options
+      var centerConfig = chart.config.options.elements.center;
+      var fontStyle = centerConfig.fontStyle || 'Arial';
+      var txt = centerConfig.text;
+      var color = centerConfig.color || '#000';
+      var sidePadding = centerConfig.sidePadding || 20;
+      var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
+      //Start with a base font of 30px
+      ctx.font = "60px " + fontStyle;
+
+      //Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+      var stringWidth = ctx.measureText(txt).width;
+      var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+      // Find out how much the font can grow in width.
+      var widthRatio = elementWidth / stringWidth;
+      var newFontSize = Math.floor(30 * widthRatio);
+      var elementHeight = (chart.innerRadius * 2);
+
+      // Pick a new font size so it will not be larger than the height of label.
+      var fontSizeToUse = Math.min(newFontSize, elementHeight);
+
+      //Set font settings to draw it correctly.
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+      var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+      ctx.font = fontSizeToUse+"px " + fontStyle;
+      ctx.fillStyle = color;
+
+      //Draw text in center
+      ctx.fillText(txt, centerX, centerY);
+    }
+  }
+});
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+CiscoSNMP();
+setInterval(CiscoSNMP,3000);  // Call itself after every 3 s to get update
+setTimeout(StopSpinnerSave,50000);
+/********************************************************************************************************* 
+  Call Node Red API . 
+  Read Cisco SNMP MIB
+  Update Charts
+
+*********************************************************************************************************/
+    function CiscoSNMP(){
+      
+        fetch('http://'+API_URL)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(myJson) {
+
+             //   console.log(myJson);
+
+                // Ping Test
+                //  if(myJson.SwitchPingTest == 'fail'){
+                //   alert('Cisco Switch not detected'); // Cisco switch is not connected
+                //  }else{
+
+                //  }
+                  
+                if(JSON.stringify(myJson)===JSON.stringify(SNMP_Cisco)){
+
+                  // No changes Occured.
+            
+                    // Power Supply and FAN Status Update. 
+                      if(myJson.PS1Stat != 'OK'){
+                        document.getElementById('chartPowerSupplyStatus').style.color = 'red';
+                      }else{
+                        document.getElementById('chartPowerSupplyStatus').style.color = 'white';
+                      }
+                      
+                      if(myJson.Fan1Stat != 'OK'){
+                        document.getElementById('chartFanStatus').style.color = 'red';
+                      }else{
+                        document.getElementById('chartFanStatus').style.color = 'white';
+                      }
+
+                      if(myJson.Fan2Stat != 'OK'){
+                        document.getElementById('chartFan2Status').style.color = 'red';
+                      }else{
+                        document.getElementById('chartFan2Status').style.color = 'white';
+                      }
+
+                      if(myJson.Fan3Stat != 'OK'){
+                        document.getElementById('chartFan3Status').style.color = 'red';
+                      }else{
+                        document.getElementById('chartFan3Status').style.color = 'white';
+                      }
+
+                      //update SNMP_Cisco Obj
+                        SNMP_Cisco = myJson;
+
+                }else{ //Change Occured
+                
+              
+                  //Model Check
+                    if( myJson.model == SNMP_Cisco.model ){
+                      //no change
+                    
+                      document.getElementById('chartSwitchModel').innerText = 'Model : ' + myJson.model ;
+                    }else{
+                      
+                      document.getElementById('chartSwitchModel').innerText = 'Model : ' + myJson.model ;
+                    }
+
+                  //IP Address Check
+                    if(myJson.SwitchIPAddress == SNMP_Cisco.SwitchIPAddress ){
+                      //no change
+                    }else{
+                      document.getElementById('chartIPAddress').innerText = myJson.SwitchIPAddress; 
+                    }
+
+                  //Power Supply Status Check
+                    if(myJson.PS1Stat == SNMP_Cisco.PS1Stat ){
+                      //no change
+                    }else{
+                      document.getElementById('chartPowerSupplyStatus').innerText = myJson.PS1Stat;
+
+                      if(myJson.PS1Stat != 'OK'){
+                        document.getElementById('chartPowerSupplyStatus').style.color = 'red';
+                      }else{
+                        document.getElementById('chartPowerSupplyStatus').style.color = 'white';
+                      }
+                    }
+
+                  //Fan1 Status Check
+                    if(myJson.Fan1Stat == SNMP_Cisco.Fan1Stat ){
+                          //no change
+                    }else{
+                      document.getElementById('chartFanStatus').innerText = myJson.Fan1Stat;
+
+                      if(myJson.Fan1Stat != 'OK'){
+                        document.getElementById('chartFanStatus').style.color = 'red';
+                      }else{
+                        document.getElementById('chartFanStatus').style.color = 'white';
+                      }
+                    }
+
+                    //Fan2 Status Check
+                    if(myJson.Fan2Stat == SNMP_Cisco.Fan2Stat ){
+                          //no change
+                    }else{
+                      document.getElementById('chartFan2Status').innerText = myJson.Fan2Stat;
+
+                      if(myJson.Fan2Stat != 'OK'){
+                        document.getElementById('chartFan2Status').style.color = 'red';
+                      }else{
+                        document.getElementById('chartFan2Status').style.color = 'white';
+                      }
+                    }
+
+                    //Fan3 Status Check
+                    if(myJson.Fan3Stat == SNMP_Cisco.Fan3Stat ){
+                          //no change
+                    }else{
+                      document.getElementById('chartFan3Status').innerText = myJson.Fan3Stat;
+
+                      if(myJson.Fan3Stat != 'OK'){
+                        document.getElementById('chartFan3Status').style.color = 'red';
+                      }else{
+                        document.getElementById('chartFan3Status').style.color = 'white';
+                      }
+                    } 
+
+                    //PoE Consumption Check
+
+                    if(myJson.PoE == SNMP_Cisco.PoE ){
+                              //no change
+                    }else{
+                          // PoE Gauge chart
+                          new Chart(document.getElementById("myChartPoE"),{
+                              type: 'doughnut',
+                              data: {
+                                //  labels: ["PoE Used"],
+                                datasets: [
+                                  {
+                                  //  label: ["used", "remaining"],
+                                    backgroundColor: ["#3498db", "#808080"],
+                                    data: [myJson.PoE,350-myJson.PoE]
+                                  }
+                                ]
+                              },
+                              options: {
+                                rotation:-1 * Math.PI,
+                                cutoutPercentage: 50,
+                                title: {
+                                  display: true,
+                                  text: 'PoE Power',
+                                  fontColor: "#ffffff"
+                                },
+                                elements: {
+                                  center: {
+                                  text: myJson.PoE +'W',
+                                  color: '#ffffff', 
+                                  fontStyle: 'Helvetica', //Default Arial
+                                  sidePadding: 15 //Default 20 (as a percentage)
+                                  }
+                                }
+                              }
+                          });
+                            
+                    }
+                          
+                    //Temperature
+
+                      if( myJson.Temperature == SNMP_Cisco.Temperature ){
+                                //no change
+                      }else{
+                                // Temp Dougnut chart
+                                new Chart(document.getElementById("myChartTemp"),{
+                                type: 'doughnut',
+                                data: {
+                                //  labels: ["CPU Temp C", "remaining"],
+                                  datasets: [
+                                    {
+                                    //  label: ["used", "remaining"],
+                                      backgroundColor: ["#FFA500", "#808080"],
+                                      data: [myJson.Temperature,100-myJson.Temperature]
+                                    }
+                                  ]
+                                },
+                                options: {
+                                  // circumference:1 * Math.PI,
+                                  rotation:-1 * Math.PI,
+                                  cutoutPercentage: 50,
+                                  title: {
+                                    display: true,
+                                    text: 'Temp',
+                                    fontColor: "#ffffff"
+                                  },
+                                  elements: {
+                                  center: {
+                                  text: myJson.Temperature +'C',
+                                  color: '#ffffff',
+                                  fontStyle: 'Helvetica', //Default Arial
+                                  sidePadding: 15 //Default 20 (as a percentage)
+                                  }
+                                }
+                              }
+                            });       
+                      }
+
+
+                    //  Port Operational Status Check
+
+                    if(myJson.PortOperationalStatus == SNMP_Cisco.PortOperationalStatus){
+                              //no change
+                    }else{
+
+                        // Update SG350 Port Status
+                        if(myJson.model.includes('SG350-52')){
+                         
+                            for(i = 1;i<=50;i++){
+                            
+                                if((myJson.PortOperationalStatus[i-1]) ==1){
+                                  
+                                  document.getElementById("52port" +i).style.color = 'orange';
+
+                                }else if((myJson.PortOperationalStatus[i-1]) ==2){
+
+                                  document.getElementById("52port" +i).style.color = 'white';
+
+                                }else{}
+                          }
+                    
+                        }else if(myJson.model.includes('SG350-28')){
+
+                            for(i = 1;i<=26;i++){
+                                  if((myJson.PortOperationalStatus[i-1]) ==1){
+                                
+                                    document.getElementById("28port" +i).style.color = 'orange';
+
+                                  }else if((myJson.PortOperationalStatus[i-1]) ==2){
+
+                                    document.getElementById("28port" +i).style.color = 'white';
+
+                                  }else{}
+                            }
+
+
+                        }else if(myJson.model.includes('SG350-10')){
+
+                            for(i = 1;i<=8;i++){
+                                  if((myJson.PortOperationalStatus[i-1]) ==1){
+                                
+                                    document.getElementById("10port" +i).style.color = '#orange';
+
+                                  }else if((myJson.PortOperationalStatus[i-1]) ==2){
+
+                                    document.getElementById("10port" +i).style.color = 'white';
+
+                                  }else{}
+                            }
+
+                        }else{}
+
+                      }
+
+                  // Update Object
+                    SNMP_Cisco = myJson ;
+
+                }
+
+                showSwitch();
+
+        }) // END .then////////////////////////////////////////////////////////////////
+          
+          .catch(function() {
+              console.log('ERROR!')
+          })
+          
+    }
+
+
+  // SG350 showSwitch ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    function showSwitch(){
+               console.log(SNMP_Cisco);
+               // Determine how many unique TX Video Vlans exist.      
+                // arraySet = new Set(SNMP_Cisco.PortVlanMembership);
+                // uniqueVlans  = (arraySet.size -1); // 
+
+              if(SNMP_Cisco.model.includes('SG350-10')){
+                  document.getElementById("sg350-10").style.display = 'block';
+                  document.getElementById("sg350-28").style.display = 'none';
+                  document.getElementById("sg350-52").style.display = 'none';
+                  document.getElementById("fan3Row").style.display = 'none'; //Hide FAN 3 . Not Installed in 10P switch
+
+
+              }else if(SNMP_Cisco.model.includes('SG350-28')){
+                
+                document.getElementById("sg350-10").style.display = 'none';
+                document.getElementById("sg350-28").style.display = 'block';
+                document.getElementById("sg350-52").style.display = 'none';
+                document.getElementById("fan3Row").style.display = 'none'; //Hide FAN 3 . Not Installed in 10P switch
+                
+                for (let i = 1; i <= 28; i++) {
+              
+                  document.getElementById('28port' + i).classList.remove('portTX');
+                  document.getElementById('28port' + i).classList.remove('portRX');
+                }
+
+                for(let i = 1; i<=SNMP_Cisco.uniqueVlans;i++){
+                 
+                    document.getElementById('28port' + i).classList.add('portTX');
+                 }
+          
+                for(let j = (parseInt(SNMP_Cisco.uniqueVlans)+1); j <= (28-(parseInt(SNMP_Cisco.vlan1Count))); j++){
+                 
+                  document.getElementById('28port' +j).classList.add('portRX');
+                 }
+
+              }else{// SG350-52P
+                document.getElementById("sg350-10").style.display = 'none';
+                document.getElementById("sg350-28").style.display = 'none';
+                document.getElementById("sg350-52").style.display = 'block';
+
+                for (let i = 1; i <= 52; i++) {
+                  
+                  document.getElementById('52port' + i).classList.remove('portTX');
+                  document.getElementById('52port' + i).classList.remove('portRX');
+                }
+
+                for(let i = 1; i<= SNMP_Cisco.uniqueVlans;i++){
+                    document.getElementById('52port' +i).classList.add('portTX');
+                 }
+        
+                  for (let j = (parseInt(SNMP_Cisco.uniqueVlans) + 1); j <= (52 - (parseInt(SNMP_Cisco.vlan1Count))); j++) {
+                    document.getElementById('52port' + j).classList.add('portRX');
+                 }
+
+              }
+
+    }
+
+    // Save Cisco Switch Configuration Example: {"ip":"192.168.1.xx","TXports":"10","RXports":"38"} 
+
+    function writeToUserSwitchConfig(){
+      var UserSwitchConfig = {};
+    
+        fetch('http://' + API_URL)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (myJson) {
+          // Update Object
+          SNMP_Cisco = myJson;
+
+            if (SNMP_Cisco.model.includes('SG350-52')) {
+            UserSwitchConfig.ip = SNMP_Cisco.SwitchIPAddress;
+            UserSwitchConfig.TXports = SNMP_Cisco.uniqueVlans;
+            UserSwitchConfig.RXports = 52 - (parseInt(SNMP_Cisco.uniqueVlans) + parseInt(SNMP_Cisco.vlan1Count));
+              
+            fetch("http://" + serverIP + "/write/UserSwitchConfig/" + JSON.stringify(UserSwitchConfig))
+            .then(function (data) {
+                  // Open index.html
+                  (() => {
+                    location.replace("index.html");
+                  })()
+
+                })
+            .catch(error => console.log(error));
+
+          } else if (SNMP_Cisco.model.includes('SG350-28')) {
+            UserSwitchConfig.ip = SNMP_Cisco.SwitchIPAddress;
+            UserSwitchConfig.TXports = SNMP_Cisco.uniqueVlans;
+            UserSwitchConfig.RXports = 28 - (parseInt(SNMP_Cisco.uniqueVlans) + parseInt(SNMP_Cisco.vlan1Count));
+
+            fetch("http://" + serverIP + "/write/UserSwitchConfig/" + JSON.stringify(UserSwitchConfig))
+            .then(function (data) {
+                  // Open index.html
+                  (() => {
+                    location.replace("index.html");
+                  })()
+
+                })
+            .catch(error => console.log(error));
+          } else { }
+
+        })
+        .catch(function () {
+          console.log('ERROR!')
+        })
+
+    }
+  
+// Stop Spinner and Show Save Button
+function StopSpinnerSave(){
+
+  document.getElementById('spinner').style.display = 'none'
+  document.getElementById('loading').style.display = 'none'
+  document.getElementById('img-home').style.display = 'block'
+  document.getElementById('img-home').style.visibility = 'visible'
+
+
+}
+
+  
+
+
+
+
+</script>
+</html>

@@ -1,1 +1,1 @@
-{"ip":"192.168.1.110","TXports":"0","RXports":"48"}
+{"ip":"","TXports":"","RXports":""}

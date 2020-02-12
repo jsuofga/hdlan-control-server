@@ -49,13 +49,13 @@
         <a id ='sideMenuRow19'href="#" title = "19"><span class="fas fa-play fa-xs" aria-hidden="true" ></span><span id = "sourceName19">Video Source 19</span> </a>
         <a id ='sideMenuRow20'href="#" title = "20"><span class="fas fa-play fa-xs" aria-hidden="true" ></span><span id = "sourceName20">Video Source 20</span> </a>
         <a id ='sideMenuRow21'href="#" onclick = "SystemConfig()"><span class = "fas fa-cog" aria-hidden="true"></span> System Config</a>
-        <a id ='sideMenuRow22'href="#" onclick = "show_Devices()"><span class= "fas fa-edit" aria-hidden="true" ></span> Devices</a>
+        <a id ='sideMenuRow22'href="#" onclick = "show_Devices('device')"><span class= "fas fa-edit" aria-hidden="true" ></span> Devices</a>
         <a id ='sideMenuRow23'href="#" onclick = "saveFavoriteScene('1')"><span class="fas fa-bookmark" aria-hidden="true" ></span> Save Current Scene as Preset 1</a>
         <a id ='sideMenuRow24'href="#" onclick = "saveFavoriteScene('2')"><span class="fas fa-bookmark" aria-hidden="true" ></span> Save Current Scene as Preset 2</a>
         <a id ='sideMenuRow25'href="#" onclick = "saveFavoriteScene('3')"><span class="fas fa-bookmark" aria-hidden="true" ></span> Save Current Scene as Preset 3</a>
         <a id ='sideMenuRow26'href="#" onclick = "PoE('on')"><span class="fas fa-power-off" style="color:#00ff00" aria-hidden="true" ></span> PoE ON</a>
         <a id ='sideMenuRow27'href="#" onclick = "PoE('off')"><span class="fas fa-power-off" style="color:#ff0000" aria-hidden="true" ></span> PoE OFF</a>
-       
+                   
 </div>
 
 
@@ -191,111 +191,14 @@
 
     </div>
 
-    <div id = 'sg350ConfigContainer' class="container my-Container overflow-auto">
+    <div id = 'sg350ConfigContainer' class="container my-Container overflow-auto" >
 
-      <div id = "sg350confingRow1" class = "row mySG350Form ">
-          <div class="col my-col">
-            <p>Authorized System Admin Only!</p>
-            <p>Cisco SG350 Switch must have matching configuration. </p>
-            <p>Contact us if you are unsure: info@octavainc.com</p>
-          </div>
-
-        <div class="col my-col">
-          <div id = "TXSelect" class="form ">
-            <label for="TXSelect">Video Inputs (TX):</label>
-            <select class="form-control" id="TXports">
-                <option>0</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-                <option>13</option>
-                <option>14</option>
-                <option>15</option>
-                <option>16</option>
-                <option>17</option>
-                <option>18</option>
-                <option>19</option>
-                <option>20</option>
-              </select>
-            <br>
-          </div>
-
-        </div>
-        <div class="col my-col ">
-          <div id = "RXSelect" class="form ">
-                <label for="RXSelect">Displays (RX):</label>
-                <select class="form-control" id="RXports">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                    <option>13</option>
-                    <option>14</option>
-                    <option>15</option>
-                    <option>16</option>
-                    <option>17</option>
-                    <option>18</option>
-                    <option>19</option>
-                    <option>20</option>
-                    <option>21</option>
-                    <option>22</option>
-                    <option>23</option>
-                    <option>24</option>
-                    <option>25</option>
-                    <option>26</option>
-                    <option>27</option>
-                    <option>28</option>
-                    <option>29</option>
-                    <option>30</option>
-                    <option>31</option>
-                    <option>32</option>
-                    <option>33</option>
-                    <option>34</option>
-                    <option>35</option>
-                    <option>36</option>
-                    <option>37</option>
-                    <option>38</option>
-                    <option>39</option>
-                    <option>40</option>
-                    <option>41</option>
-                    <option>42</option>
-                    <option>43</option>
-                    <option>44</option>
-                    <option>45</option>
-                    <option>46</option>
-                    <option>47</option>
-                    <option>48</option>
-                </select>
-                <br>
-              </div>
-            
-         </div>
-         <div class="col my-col"></div>
-
-      </div>
         <!-- ////////////////////////////////////////////////////////////////////////////////////////////////// -->
         <div id = "sg350confingRow2" class = "row mySG350Form ">
           <div class="col-4 my-col"></div>
           <div class="col-4 my-col">
             <div class="form" >
-              <label for="usr">IP Address of Cisco Switch</label>
+              <label id = "labelIPAdress" for="usr">IP Address of Cisco Switch</label>
               <input id="ipAddressOfSwitch" type="text" maxlength="15" class="form-control"  >
             </div>
           </div>
@@ -310,7 +213,7 @@
   
           <div class="col-md-2 my-Col">
             <button id = 'sg350-save-btn' type="button" class=" btn btn-primary btn-block" onclick = "sg350ConfigSubmitBtn()">
-              <span class= "fas fa-file-export" aria-hidden="true"></span> Save
+              <span class= "fas fa-sync" aria-hidden="true"></span> Connect
             </button>
           </div>
           <div class="col-md-2 my-Col">
@@ -347,6 +250,14 @@
           </div>
         </li>
 
+        <li  class="nav-item my_spacing">
+          <a href="dashboard.html" >
+            <img id ='img-TV-All' src="img/baseline_network_check_white.png" height = 48px width =48px  alt="dashboard">
+          </a>
+            
+      </li>
+      
+
       </ul>
 
     </nav>
@@ -356,6 +267,7 @@
 <script>
 
     var serverIP =location.hostname + ":3000";  // IP +  based on the URL in the WebBrowser
+    var API_URL = location.hostname + ":1880/ciscoStat";  // Rest API URL for NodeRed 
 
     var userIN_TV_Names =
           {"tv1":"","tv2":"","tv3":"","tv4":"","tv5":"","tv6":"","tv7":"","tv8":"","tv9":"","tv10":"",
@@ -370,9 +282,11 @@
     var userIN_TV_Names_OBJ = {}; // User stored Input and TV Names
     var userFavorite_Scene_OBJ ={}; // User stored Favorite
     var UserSwitchConfig_OBJ = {}; // Cisco Switch Configuration Example: {"ip":"192.168.1.xx","TXports":"10","RXports":"38"}
+    var currentStatus_OBJ = {};
 
     var TVSelect = '1'
     var SourceSelect = '1'
+    var showMode = '' //showMode = device ( in device naming/entry UI), showMode = home ( home mode)
     var currentScene =
                       {"tv1" :"1", "tv2" :"1", "tv3" :"1", "tv4" :"1", "tv5" :"1", "tv6" :"1", "tv7" :"1", "tv8" :"1", "tv9" :"1", "tv10" :"1",
                       "tv11" :"1", "tv12" :"1", "tv13" :"1", "tv14" :"1", "tv15" :"1", "tv16" :"1", "tv17" :"1", "tv18" :"1", "tv19" :"1", "tv20" :"1",
@@ -392,6 +306,10 @@
     EventListenSideMenu_Video_Sources(); // Create Event Listeners for all Input Buttons
     //EventListen_Home();          // Create Event Listeners for Home
     show_Home();  // Show HOME scene
+  
+  
+  var statusInterval = setInterval(StatusMonitor,10000); // Check for Network Switch problems every 10 seconds.
+
 
   /*********************************************************************************************************************************/
   function openSideMenu(_showMode){
@@ -515,8 +433,6 @@
 
     function EventListenSideMenu_Video_Sources(){
 
-      
-
       for (let i = 1; i <= 20; i++) {
 
         document.getElementById("sideMenuRow" + i).addEventListener("click", function (title) {
@@ -530,21 +446,30 @@
           
             alert("Switching "+userIN_TV_Names_OBJ['tv'+TVSelect] + " to " + userIN_TV_Names_OBJ['in'+this.title] );
 
+
+            //Disable StatusMonitoring Polling for 30 S. Allows first source name update to be immediate, then after 1 time get from SNMP object
+            clearInterval(statusInterval);
+            setTimeout(function () { clearInterval(statusInterval); statusInterval = setInterval(StatusMonitor, 30000) }, 100)
+   
             // Send to Express to save in 'UserSwitchStatus.txt'
             saveUserSwitchStatus('singleTV')
 
             //Send API Command to Express to do switching
-            // fetch("http://"+serverIP+"/switchRX/"+(parseInt(TVSelect)+8)+"/vlan/"+(parseInt(SourceSelect)+1)); //For Custom UI
+
             fetch("http://"+serverIP+"/switchRX/"+(parseInt(TVSelect))+"/vlan/"+(parseInt(SourceSelect)+1)); //For Standard UI. Comment out for Customer UI
 
           }else if(TVSelect=='allTV'){ //All TV Selected
         
             alert("Switching All TV's" + " to " + userIN_TV_Names_OBJ['in'+this.title] );
 
+
+            //Disable StatusMonitoring Polling for 30 S. Allows first source name update to be immediate, then after 1 time get from SNMP object
+            clearInterval(statusInterval);
+            setTimeout(function () { clearInterval(statusInterval); statusInterval = setInterval(StatusMonitor, 30000) }, 100)
+
             saveUserSwitchStatus('allTV')
 
             //Send API Command to Express to do switching
-            //fetch("http://"+serverIP+"/switchAll/start/" + 9 + "/end/"+24+"/vlan/"+(parseInt(SourceSelect)+1)); // For Custom UI
 
             fetch("http://"+serverIP+"/switchAll/vlan/"+(parseInt(SourceSelect)+1)); //For Standard UI. Comment out for Customer UI
          
@@ -554,31 +479,6 @@
       }
 
     }
-
-    /***EventListen_Home_Button()******************************************************************************************
-
-    **************************************************************************************************************/
-    // function EventListen_Home(){
-
-    //   document.getElementById("img-home").addEventListener("mouseover", function () {
-
-    //       document.getElementById("img-home").src = 'img/home_blue.png';
-
-    //   });
-    //   document.getElementById("img-home").addEventListener("mouseout", function () {
-
-    //       document.getElementById("img-home").src = 'img/home_white.png';
-
-    //   });
-
-    //   document.getElementById("img-home").addEventListener("click", function () {
-
-    //     show_Home();
-
-    //   });
-
-    // }
-
 
     /*** show_Home() *********************************************************************************************
 
@@ -664,42 +564,89 @@
       2.Update TV with current selection
 
     **************************************************************************************************************/
-    function tvStatus(){
+    function tvStatus(_mode){
+      let mode = _mode;
+
+      console.log(mode);
       //  Read from UserInputNames.txt
       read_from_TX1("UserInputNames",function(){
 
-          //  Read from UserSwitchStatus.txt
-          read_from_TX1("UserSwitchStatus",function(){
+          if(mode == 'userPressedButton'){
+
+            //  Status from User Button Press
+            read_from_TX1("UserSwitchStatus", function () {
 
               //  Show only the Active TV Img and labels
-              for(let i= 1; i<=48; i++){
+              for (let i = 1; i <= 48; i++) {
 
                 // To Enable the TV img on mouse/pointer.
-                document.getElementById("img-tv"+i).style.pointerEvents = 'auto';
+                document.getElementById("img-tv" + i).style.pointerEvents = 'auto';
 
-                if(userIN_TV_Names_OBJ['tv'+i] =='empty' ){ // Not Used. Leave Hidden
-                document.getElementById("tv"+i+"Label").style.visibility = "hidden";
-                document.getElementById("img-tv"+i).style.visibility = "hidden";
-                document.getElementById("tv"+i+"source").style.display= "hidden";
-                document.getElementById("tv"+i+"source").style.visibility = "hidden";
-                }else{
-                  document.getElementById("img-tv"+i).style.display = "block";
-                  document.getElementById("img-tv"+i).style.visibility = "visible";
-                  document.getElementById("tv"+i+"source").style.display= "block";
-                  document.getElementById("tv"+i+"source").style.visibility = "visible";
-                  document.getElementById("tv"+i+"source").innerText= userIN_TV_Names_OBJ['in'+currentScene['tv'+i]];
+                if (userIN_TV_Names_OBJ['tv' + i] == 'empty') { // Not Used. Leave Hidden
+                  document.getElementById("tv" + i + "Label").style.visibility = "hidden";
+                  document.getElementById("img-tv" + i).style.visibility = "hidden";
+                  document.getElementById("tv" + i + "source").style.display = "hidden";
+                  document.getElementById("tv" + i + "source").style.visibility = "hidden";
+                } else {
+                  document.getElementById("img-tv" + i).style.display = "block";
+                  document.getElementById("img-tv" + i).style.visibility = "visible";
+                  document.getElementById("tv" + i + "source").style.display = "block";
+                  document.getElementById("tv" + i + "source").style.visibility = "visible";
+                  document.getElementById("tv" + i + "source").innerText = userIN_TV_Names_OBJ['in' + currentScene['tv' + i]];
                 }
-            }
+              }
             })
+
+          }else{
+         // Status from SNMP Read of Switch
+            console.log('from SNMP JiRO');
+
+
+            for (i = 1; i <= 48; i++) {
+              // To Enable the TV img on mouse/pointer.
+              document.getElementById("img-tv" + i).style.pointerEvents = 'auto';
+
+              if (userIN_TV_Names_OBJ['tv' + i] == 'empty') { // Not Used. Leave Hidden
+                document.getElementById("tv" + i + "Label").style.visibility = "hidden";
+                document.getElementById("img-tv" + i).style.visibility = "hidden";
+                document.getElementById("tv" + i + "source").style.display = "hidden";
+                document.getElementById("tv" + i + "source").style.visibility = "hidden";
+              } else {
+                document.getElementById("img-tv" + i).style.display = "block";
+                document.getElementById("img-tv" + i).style.visibility = "visible";
+                document.getElementById("tv" + i + "source").style.display = "block";
+                document.getElementById("tv" + i + "source").style.visibility = "visible";
+                document.getElementById("tv" + i + "source").innerText = userIN_TV_Names_OBJ['in' + (currentStatus_OBJ.PortVlanMembership[currentStatus_OBJ.uniqueVlans - 1 + i] - 1)];
+          
+              }
+            }
+          }
+
+          //
+           if(showMode =='device'){
+             // Do not display TV and Video Input Image
+             for (i = 1; i <= 48; i++) {
+               document.getElementById("img-tv" + i).style.display = "none";
+               document.getElementById("tv" + i + "source").style.display = "none";
+                document.getElementById("tv" + i + "Label").style.visibility = "visible";
+
+             }
+             for (i = 1; i <= 20; i++) {
+               document.getElementById("img-in" + i).style.display = "none";
+             }
+
+           }else{}
+           
+
 
       })
 }
 
-
     /*** show_Devices() *******************************************************************************************
       Show Device Entry UI
     **************************************************************************************************************/
-    function show_Devices(){
+    function show_Devices(_mode){
+        showMode = _mode;
 
         show_RX_TV(); // Show all RX and TV Img first.
         show_TX_Input();
@@ -744,8 +691,6 @@
           }
 
          }
-
-        
 
 
       });
@@ -947,7 +892,6 @@
     function saveUserSwitchStatus(_mode){
     let mode = _mode
 
-   
     if(mode == 'singleTV'){
 
        currentScene["tv"+TVSelect] = SourceSelect;
@@ -960,10 +904,9 @@
 
     }
 
-
     fetch("http://"+serverIP+"/write/UserSwitchStatus/" + JSON.stringify(currentScene))
     .then(function(data) {
-      tvStatus()
+      tvStatus('userPressedButton')
     })
     .catch(error => console.log(error)); 
      
@@ -1057,7 +1000,7 @@
     }
 
 
-    /***  SwitchToFavoriteScene()  **********************************************************************************************
+    /***  SwitchToFavoriteScene()  *******************************************************************************
 
 
 
@@ -1067,6 +1010,12 @@
       let preset = _preset
       closeSideMenu()
       alert('Switching to Preset-'+ preset)
+
+      //Disable StatusMonitoring Polling for 30 S. Allows first source name update to be immediate, then after 1 time get from SNMP object
+      clearInterval(statusInterval);
+      setTimeout(function () { clearInterval(statusInterval); statusInterval = setInterval(StatusMonitor, 30000) }, 100)
+
+                  
 
       // Change TV and All TV Buttons to 'white'
       for(let i = 1;i<=48; i++){
@@ -1106,8 +1055,7 @@
             if (this.readyState == 4 && this.status == 200) {
              console.log(this.response)
              document.getElementById('ipAddressOfSwitch').value = JSON.parse(this.response)['ip']
-             document.getElementById('TXports').value = JSON.parse(this.response)['TXports']
-             document.getElementById('RXports').value = JSON.parse(this.response)['RXports']
+                  
 
             }else{
               //Do Nothing
@@ -1117,29 +1065,30 @@
     }
     /******************************************************************************************************/
     function sg350ConfigSubmitBtn(){
+      showMode = 'home'
       let sg350Config = {"ip":"","TXports": "","RXports":""}
 
       sg350Config['ip'] = document.getElementById('ipAddressOfSwitch').value
-      sg350Config['TXports'] = document.getElementById('TXports').value
-      sg350Config['RXports'] = document.getElementById('RXports').value
-       
+      UserSwitchConfig_OBJ.ip = document.getElementById('ipAddressOfSwitch').value
+
       fetch("http://"+serverIP+"/write/UserSwitchConfig/" + JSON.stringify(sg350Config))
       .then(function(data) {
-        tvStatus()
+
+       
+      // Open dashboard.html
+
+        setTimeout(function(){location.replace("dashboard.html")},200)
+
+
       })
       .catch(error => console.log(error));
 
-     document.getElementById("sg350ConfigContainer").style.display = "none";
-     for (i= 1;i<=48;i++){
-        document.getElementById("tv"+i).style.display = "none";
 
-      }
-      show_Home()
     }
    
     /******************************************************************************************************/
     function sg350ConfigHide(){
-     
+      showMode = 'home'
       document.getElementById("sg350ConfigContainer").style.display = "none";
 
       for (i= 1;i<=48;i++){
@@ -1159,12 +1108,87 @@
         })
         .catch(error => console.log(error));
 
-
     }
+
+    /***********************************************************************************************************
+    function StatusMonitor()
+     Call RPI Gateway API to get Status
+    *************************************************************************************************************/
+    function StatusMonitor(){
+
+        // 
+        
+        fetch("http://"+API_URL)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(myJson) {
+          console.log(myJson)
+          UserSwitchConfig_OBJ.model = myJson.model;
+          currentStatus_OBJ = myJson;
+
+        //Ping Cisco Switch to see if it is connected"
+          if(myJson.SwitchPingTest =='fail'){
+
+            alert('Cisco Switch not detected'); // Cisco switch is not connected
+
+          }else{// Cisco switch is connected. Proceed to test Fan and Power Supply
+           
+              if(myJson.model.includes('SG350-52')){
+                console.log('PING ok-52')
+               
+                if((myJson.PS1Stat || myJson.Fan1Stat || myJson.Fan2Stat|| myJson.Fan3Stat) != 'OK'){  
+                  alert('Cisco SG350 Power Supply, Fan problem detected!')
+                }else {
+                  //All OK. 
+                  //Update currentScene{}
+                  for(i=1;i<=48;i++){
+                    currentScene['tv' + i] = myJson.PortVlanMembership[((myJson.uniqueVlans) - 1) + i] - 1;
+                  }
+          
+               }
+              }else if(myJson.model.includes('SG350-28')){
+                console.log('PING ok-28')
+                console.log(currentScene)
+                if((myJson.PS1Stat || myJson.Fan1Stat || myJson.Fan2Stat) != 'OK'){  
+                  alert('Cisco SG350 Power Supply, Fan problem detected!')
+                }else {
+                  //All OK. 
+                  //Update currentScene{}
+                  for (i = 1; i <= 26; i++) {
+                    currentScene['tv' + i] = myJson.PortVlanMembership[((myJson.uniqueVlans)-1)+i] -1;
+                  }
+               }
+              }else if(myJson.model.includes('SG350-10')){
+                console.log('PING ok-10')
+
+                if((myJson.PS1Stat) != 'OK'){  
+                  alert('Cisco SG350 Power Supply, Fan problem detected!')
+                }else {
+                  //All OK. 
+                  //Update currentScene{}
+                  for (i = 1; i <= 8; i++) {
+                    currentScene['tv' + i] = myJson.PortVlanMembership[((myJson.uniqueVlans) - 1) + i] - 1;
+                  }
+               }
+              }else{}
+          }
+
+          
+            tvStatus() // Update Source Listings
+ 
+         })
+        .catch(function() {
+            console.log('ERROR!');
+            alert('Gateway not detected!')
+        })
+   
+    }
+
+
 
     </script>
 
   </body>
 </html>
-
 
