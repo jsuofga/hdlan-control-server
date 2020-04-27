@@ -53,8 +53,8 @@
         <a id ='sideMenuRow23'href="#" onclick = "saveFavoriteScene('1')"><span class="fas fa-bookmark" aria-hidden="true" ></span> Save Current Scene as Preset 1</a>
         <a id ='sideMenuRow24'href="#" onclick = "saveFavoriteScene('2')"><span class="fas fa-bookmark" aria-hidden="true" ></span> Save Current Scene as Preset 2</a>
         <a id ='sideMenuRow25'href="#" onclick = "saveFavoriteScene('3')"><span class="fas fa-bookmark" aria-hidden="true" ></span> Save Current Scene as Preset 3</a>
-        <a id ='sideMenuRow26'href="#" onclick = "PoE('on')"><span class="fas fa-power-off" style="color:#00ff00" aria-hidden="true" ></span> PoE ON</a>
-        <a id ='sideMenuRow27'href="#" onclick = "PoE('off')"><span class="fas fa-power-off" style="color:#ff0000" aria-hidden="true" ></span> PoE OFF</a>
+        <!-- <a id ='sideMenuRow26'href="#" onclick = "PoE('on')"><span class="fas fa-power-off" style="color:#00ff00" aria-hidden="true" ></span> PoE ON</a>
+        <a id ='sideMenuRow27'href="#" onclick = "PoE('off')"><span class="fas fa-power-off" style="color:#ff0000" aria-hidden="true" ></span> PoE OFF</a> -->
                    
 </div>
 
@@ -77,7 +77,7 @@
         <div class="col-md-2 my-Col"></div>
         <div class="col-md-4 my-Col"><img src="img/octava_logo_white-200.png" width = "25%" ></div>
         <div class="col-md-2 my-Col"></div>
-        <div class="col-md-2 my-Col">HDLAN Controller</div>
+        <div class="col-md-2 my-Col">HDLAN Controller 4.22.20</div>
     </div>
 
     <div id = "topRow" class="row">
@@ -250,12 +250,16 @@
           </div>
         </li>
 
-        <li  class="nav-item my_spacing">
+          <button id='poeOnButton' type="button" class="" onclick = "PoE('on')"><i class = 'fas fa-power-off'></i> PoE On</button> 
+          <button id='poeOffButton' type="button" class="" onclick = "PoE('off')"><i class='fas fa-power-off'></i> PoE Off</button>
+        
+
+        <!-- <li  class="nav-item my_spacing">
           <a href="dashboard.html" >
             <img id ='img-TV-All' src="img/baseline_network_check_white.png" height = 48px width =48px  alt="dashboard">
           </a>
             
-      </li>
+      </li> -->
       
 
       </ul>
@@ -268,6 +272,7 @@
 
     var serverIP =location.hostname + ":3000";  // IP +  based on the URL in the WebBrowser
     var API_URL = location.hostname + ":1880/ciscoStat";  // Rest API URL for NodeRed 
+    var API_URL_1880 = location.hostname + ":1880" ;// Rest API URL for NodeRed 
 
     var userIN_TV_Names =
           {"tv1":"","tv2":"","tv3":"","tv4":"","tv5":"","tv6":"","tv7":"","tv8":"","tv9":"","tv10":"",
@@ -456,7 +461,11 @@
 
             //Send API Command to Express to do switching
 
-            fetch("http://"+serverIP+"/switchRX/"+(parseInt(TVSelect))+"/vlan/"+(parseInt(SourceSelect)+1)); //For Standard UI. Comment out for Customer UI
+            //fetch("http://"+serverIP+"/switchRX/"+(parseInt(TVSelect))+"/vlan/"+(parseInt(SourceSelect)+1)); //For Standard UI. Comment out for Customer UI
+
+            //Send API Command to NodeRed to do switching
+
+            fetch("http://"+ API_URL_1880 +"/switchRX/"+(parseInt(TVSelect))+"/vlan/"+(parseInt(SourceSelect)+1)); //For Standard UI. Comment out for Customer UI
 
           }else if(TVSelect=='allTV'){ //All TV Selected
         
@@ -469,9 +478,9 @@
 
             saveUserSwitchStatus('allTV')
 
-            //Send API Command to Express to do switching
+            //Send API Command to NodeRed to do switching
 
-            fetch("http://"+serverIP+"/switchAll/vlan/"+(parseInt(SourceSelect)+1)); //For Standard UI. Comment out for Customer UI
+            fetch("http://"+ API_URL_1880 +"/switchAll/vlan/"+(parseInt(SourceSelect)+1)); //For Standard UI. Comment out for Customer UI
          
           }else{}
      
@@ -1014,8 +1023,7 @@
       //Disable StatusMonitoring Polling for 30 S. Allows first source name update to be immediate, then after 1 time get from SNMP object
       clearInterval(statusInterval);
       setTimeout(function () { clearInterval(statusInterval); statusInterval = setInterval(StatusMonitor, 30000) }, 100)
-
-                  
+       
 
       // Change TV and All TV Buttons to 'white'
       for(let i = 1;i<=48; i++){
@@ -1023,9 +1031,11 @@
       }
         document.getElementById("img-TV-All").src = 'img/all_tv_white_sm.png';
       
-    // Switch to User Preset. Update current Scene. Save current status
-      fetch("http://"+serverIP+"/switchRX/UserPreset/"+preset); //
-
+    // Send API Command to NodeRed to do switching. 
+      
+     fetch("http://" +  API_URL_1880 + "/switchRX/UserPreset/" + preset); 
+     
+    //Save current status
         read_from_TX1("UserPreset"+preset, function(){
   
         currentScene= userFavorite_Scene_OBJ
@@ -1099,12 +1109,13 @@
 
     /****************************************************************************************************/
     function PoE(_on_off){
-
+       
       let on_off = _on_off;
-
-      fetch("http://"+serverIP+"/poe/"+ on_off)
+      alert('PoE Power ' + on_off);
+      // Send to NodeRed API
+      fetch("http://"+ API_URL_1880 + "/poe/"+ on_off)
         .then( {
-     
+
         })
         .catch(error => console.log(error));
 
