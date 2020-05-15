@@ -14,7 +14,9 @@ app.use(cors())
 // File System
 var fs = require('fs');
 
-app.listen(3000, () => console.log('fileupdate app listening on port 3000!'));
+app.listen(3000, () => {
+    //console.log('fileupdate app listening on port 3000!');
+});
 
 app.use(express.static('public')); /* this line tells Express to use the public folder as our static folder from which we can serve static files*/
 
@@ -44,7 +46,7 @@ app.post('/', function (req, res){
     });
 
     form.on('file', function (name, file){
-        console.log('Uploaded ' + file.name);
+        //console.log('Uploaded ' + file.name);
     });
 
     res.sendFile(__dirname + '/index_update.html');
@@ -148,8 +150,7 @@ app.get('/write/:file/:dataIn', function(req,res){
         fs.writeFile('public/UserSwitchConfig.txt',dataIn, function (err, data) {
             if (err) throw err;
             res.send('Updated SwitchConfig') 
-            ConnectToCisco()
-        
+                    
     })
     }else{}
   
